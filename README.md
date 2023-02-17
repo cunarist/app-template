@@ -34,7 +34,7 @@ The goal of this template is to enable full power of Rust while using Flutter fo
 
 **Flutter** deals with cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through native steams.
 
-This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive latest updates from the template repository with the Python command stated below.
+This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive latest commits from the template repository with the Python command stated below.
 
 # 👜 System Preparation
 
@@ -97,7 +97,7 @@ Convert `app_icon.png` in `./assets` to apply the icon to multiple platforms wit
 flutter pub run flutter_launcher_icons
 ```
 
-Receive latest updates from [Cunarist App Template](https://github.com/cunarist/app-template).
+Receive latest commits from [Cunarist App Template](https://github.com/cunarist/app-template).
 
 ```
 python automate template-update
