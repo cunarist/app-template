@@ -150,13 +150,17 @@ Be careful all the time! You shouldn't be editing any file without enough knowle
 
 ### Dart Related
 
-- `lib`: Dart modules. Do not modify `bridge` folder inside it.
+- `lib`: Dart modules.
+  - Do not modify `bridge` folder inside.
 - `pubspec.yaml`: Dart settings and dependencies.
 - `.env.template`: Template of `.env` file. Includes environment variables that will be loaded in Dart.
 
 ### Rust Related
 
-- `native`: Rust crates. The name of the library crate folder should be exactly the same as that of library crate's name. `config.toml.template` file is also okay to be modified if it needed for the project. Do not modify `bridge` crate inside it. You can modify `hub` but cannot delete it because it acts as the main entry point of the Rust logic.
+- `native`: Rust crates. The name of the library crate folder should be exactly the same as that of library crate's name.
+  - Do not modify `bridge` crate inside.
+  - `config.toml.template` file is also okay to be modified if needed.
+  - Think of `hub` as your Rust entry point crate. It is not a binary crate but it is similar.
 
 ## Comments
 
