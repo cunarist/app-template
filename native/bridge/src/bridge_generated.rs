@@ -21,24 +21,14 @@ use std::sync::Arc;
 
 // Section: wire functions
 
-fn wire_create_view_update_stream_impl(port_: MessagePort) {
+fn wire_create_connection_impl(port_: MessagePort) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap(
         WrapInfo {
-            debug_name: "create_view_update_stream",
+            debug_name: "create_connection",
             port: Some(port_),
             mode: FfiCallMode::Stream,
         },
-        move || move |task_callback| Ok(create_view_update_stream(task_callback.stream_sink())),
-    )
-}
-fn wire_connect_and_start_impl() -> support::WireSyncReturn {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync(
-        WrapInfo {
-            debug_name: "connect_and_start",
-            port: None,
-            mode: FfiCallMode::Sync,
-        },
-        move || Ok(connect_and_start()),
+        move || move |task_callback| Ok(create_connection(task_callback.stream_sink())),
     )
 }
 fn wire_pass_user_action_impl(

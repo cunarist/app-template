@@ -11,13 +11,9 @@ import 'package:meta/meta.dart';
 import 'dart:ffi' as ffi;
 
 abstract class Bridge {
-  Stream<ViewUpdateDetail> createViewUpdateStream({dynamic hint});
+  Stream<ViewUpdateDetail> createConnection({dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kCreateViewUpdateStreamConstMeta;
-
-  void connectAndStart({dynamic hint});
-
-  FlutterRustBridgeTaskConstMeta get kConnectAndStartConstMeta;
+  FlutterRustBridgeTaskConstMeta get kCreateConnectionConstMeta;
 
   void passUserAction(
       {required String taskAddress, required String jsonString, dynamic hint});
@@ -44,35 +40,19 @@ class BridgeImpl implements Bridge {
   factory BridgeImpl.wasm(FutureOr<WasmModule> module) =>
       BridgeImpl(module as ExternalLibrary);
   BridgeImpl.raw(this._platform);
-  Stream<ViewUpdateDetail> createViewUpdateStream({dynamic hint}) {
+  Stream<ViewUpdateDetail> createConnection({dynamic hint}) {
     return _platform.executeStream(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_create_view_update_stream(port_),
+      callFfi: (port_) => _platform.inner.wire_create_connection(port_),
       parseSuccessData: _wire2api_view_update_detail,
-      constMeta: kCreateViewUpdateStreamConstMeta,
+      constMeta: kCreateConnectionConstMeta,
       argValues: [],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kCreateViewUpdateStreamConstMeta =>
+  FlutterRustBridgeTaskConstMeta get kCreateConnectionConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
-        debugName: "create_view_update_stream",
-        argNames: [],
-      );
-
-  void connectAndStart({dynamic hint}) {
-    return _platform.executeSync(FlutterRustBridgeSyncTask(
-      callFfi: () => _platform.inner.wire_connect_and_start(),
-      parseSuccessData: _wire2api_unit,
-      constMeta: kConnectAndStartConstMeta,
-      argValues: [],
-      hint: hint,
-    ));
-  }
-
-  FlutterRustBridgeTaskConstMeta get kConnectAndStartConstMeta =>
-      const FlutterRustBridgeTaskConstMeta(
-        debugName: "connect_and_start",
+        debugName: "create_connection",
         argNames: [],
       );
 
@@ -256,29 +236,19 @@ class BridgeWire implements FlutterRustBridgeWireBase {
   late final _init_frb_dart_api_dl = _init_frb_dart_api_dlPtr
       .asFunction<int Function(ffi.Pointer<ffi.Void>)>();
 
-  void wire_create_view_update_stream(
+  void wire_create_connection(
     int port_,
   ) {
-    return _wire_create_view_update_stream(
+    return _wire_create_connection(
       port_,
     );
   }
 
-  late final _wire_create_view_update_streamPtr =
+  late final _wire_create_connectionPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'wire_create_view_update_stream');
-  late final _wire_create_view_update_stream =
-      _wire_create_view_update_streamPtr.asFunction<void Function(int)>();
-
-  WireSyncReturn wire_connect_and_start() {
-    return _wire_connect_and_start();
-  }
-
-  late final _wire_connect_and_startPtr =
-      _lookup<ffi.NativeFunction<WireSyncReturn Function()>>(
-          'wire_connect_and_start');
-  late final _wire_connect_and_start =
-      _wire_connect_and_startPtr.asFunction<WireSyncReturn Function()>();
+          'wire_create_connection');
+  late final _wire_create_connection =
+      _wire_create_connectionPtr.asFunction<void Function(int)>();
 
   WireSyncReturn wire_pass_user_action(
     ffi.Pointer<wire_uint_8_list> task_address,

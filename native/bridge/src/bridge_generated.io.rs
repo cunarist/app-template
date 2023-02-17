@@ -2,13 +2,8 @@ use super::*;
 // Section: wire functions
 
 #[no_mangle]
-pub extern "C" fn wire_create_view_update_stream(port_: i64) {
-    wire_create_view_update_stream_impl(port_)
-}
-
-#[no_mangle]
-pub extern "C" fn wire_connect_and_start() -> support::WireSyncReturn {
-    wire_connect_and_start_impl()
+pub extern "C" fn wire_create_connection(port_: i64) {
+    wire_create_connection_impl(port_)
 }
 
 #[no_mangle]

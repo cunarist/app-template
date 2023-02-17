@@ -9,7 +9,7 @@ import 'app.dart';
 import 'value.dart';
 import 'bridge/ffi.dart';
 
-var viewUpdateStream = api.createViewUpdateStream();
+var viewUpdateStream = api.createConnection();
 var viewUpdateBroadcaster = StreamController<ViewUpdateDetail>.broadcast();
 
 void main() async {
@@ -21,9 +21,6 @@ void main() async {
     dotenv.env.forEach((k, v) => debugPrint('ENV $k $v'));
     return true;
   }());
-
-  // Connect and start running Rust back-end
-  api.connectAndStart();
 
   // Prepare view update broadcasting
   viewUpdateStream.listen((event) {
