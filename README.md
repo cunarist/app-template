@@ -182,9 +182,7 @@ If the characteristic of a specific Rust API is totally different from other Rus
 
 For faster and easier development, Cunarist App Template relies on Python scripts in `./automate` for automation.
 
-Although Python automation is convenient, if there comes a situation where dependencies get updated and therefore specialized automation is not needed anymore in some areas, it's best to switch to out-of-the-box features of those dependencies.
-
-[Black](https://black.readthedocs.io/en/stable/) formatter should be used for maintaining quality code.
+[Black](https://black.readthedocs.io/en/stable/) formatter is used for maintaining quality Python code.
 
 # 📁 Folder Structure
 
