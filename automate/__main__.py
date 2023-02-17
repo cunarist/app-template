@@ -144,6 +144,12 @@ elif sys.argv[1] == "template-update":
     command = "git merge template/main --allow-unrelated-histories"
     os.system(command)
 
+elif sys.argv[1] == "code-quality":
+    command = "dart fix --apply"
+    os.system(command)
+    command = "cargo clippy --fix --allow-dirty --manifest-path ./native/Cargo.toml"
+    os.system(command)
+
 else:
     print("No such option for automation is available.")
 

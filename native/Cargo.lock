@@ -53,8 +53,10 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 name = "bridge"
 version = "0.1.0"
 dependencies = [
+ "ctor",
  "flutter_rust_bridge",
  "hub",
+ "once_cell",
 ]
 
 [[package]]
@@ -133,6 +135,16 @@ name = "core-foundation-sys"
 version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5827cebf4670468b8772dd191856768aedcb1b0278a04f989f7766351917b9dc"
+
+[[package]]
+name = "ctor"
+version = "0.1.26"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d2301688392eb071b0bf1a37be05c469d3cc4dbbd95df672fe28ab021e6a096"
+dependencies = [
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "cxx"
@@ -231,7 +243,8 @@ dependencies = [
 name = "hub"
 version = "0.1.0"
 dependencies = [
- "lazy_static",
+ "ctor",
+ "once_cell",
  "sample_crate_first",
  "sample_crate_second",
  "tokio",

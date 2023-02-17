@@ -21,30 +21,30 @@ use std::sync::Arc;
 
 // Section: wire functions
 
-fn wire_start_main_impl(port_: MessagePort) {
+fn wire_create_view_update_stream_impl(port_: MessagePort) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap(
         WrapInfo {
-            debug_name: "start_main",
+            debug_name: "create_view_update_stream",
             port: Some(port_),
-            mode: FfiCallMode::Normal,
+            mode: FfiCallMode::Stream,
         },
-        move || move |task_callback| Ok(start_main()),
+        move || move |task_callback| Ok(create_view_update_stream(task_callback.stream_sink())),
     )
 }
-fn wire_request_task_impl(
-    order: impl Wire2Api<String> + UnwindSafe,
-    json: impl Wire2Api<String> + UnwindSafe,
+fn wire_pass_user_action_impl(
+    task_address: impl Wire2Api<String> + UnwindSafe,
+    json_string: impl Wire2Api<String> + UnwindSafe,
 ) -> support::WireSyncReturn {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync(
         WrapInfo {
-            debug_name: "request_task",
+            debug_name: "pass_user_action",
             port: None,
             mode: FfiCallMode::Sync,
         },
         move || {
-            let api_order = order.wire2api();
-            let api_json = json.wire2api();
-            Ok(request_task(api_order, api_json))
+            let api_task_address = task_address.wire2api();
+            let api_json_string = json_string.wire2api();
+            Ok(pass_user_action(api_task_address, api_json_string))
         },
     )
 }
@@ -78,6 +78,13 @@ impl Wire2Api<u8> for u8 {
 }
 
 // Section: impl IntoDart
+
+impl support::IntoDart for ViewUpdateDetail {
+    fn into_dart(self) -> support::DartAbi {
+        vec![self.data_address.into_dart(), self.bytes.into_dart()].into_dart()
+    }
+}
+impl support::IntoDartExceptPrimitive for ViewUpdateDetail {}
 
 // Section: executor
 

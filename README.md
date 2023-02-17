@@ -9,7 +9,7 @@ Based on the default Flutter template, many additional packages and modification
 Extra features added to default Flutter template are:
 
 - Rust integration with ability to use multiple library crates
-- State management with data on Rust side
+- MVVM pattern with state management on Rust side
 - Convenient app naming and icon generation
 - Convenient environment variable management
 - Localization
@@ -124,10 +124,10 @@ You should change values of environment variables inside these files during deve
 
 You might need to dive into this section quite often.
 
-Check and fix problems in `./native` Rust crates.
+Check and fix problems in `./native` Rust code and `./lib` Dart code.
 
 ```
-cargo clippy --fix --allow-dirty --manifest-path ./native/Cargo.toml
+python automate code-quality
 ```
 
 Run the app in debug mode.

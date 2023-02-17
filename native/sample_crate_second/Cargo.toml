@@ -9,4 +9,4 @@ crate-type = ["lib", "cdylib", "staticlib"]
 [dependencies]
 # Downloaded
 serde_json = { workspace = true }
-# Workspace
+# In workspace

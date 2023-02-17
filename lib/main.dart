@@ -1,27 +1,31 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:provider/provider.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'state.dart';
 import 'app.dart';
 import 'value.dart';
 import 'bridge/ffi.dart';
 
+var viewUpdateStream = api.createViewUpdateStream();
+var viewUpdateBroadcaster = StreamController<ViewUpdateDetail>.broadcast();
+
 void main() async {
   // Debug mode code
   assert(() {
-    // assert statement gets removed in release mode
+    // Assert statement gets removed in release mode
     debugPrint('CWD ${Directory.current.path}');
     dotenv.testLoad(fileInput: File('.env').readAsStringSync());
     dotenv.env.forEach((k, v) => debugPrint('ENV $k $v'));
     return true;
   }());
 
-  // Start Rust's back-end sub thread
-  api.startMain();
+  // Prepare view update broadcasting
+  viewUpdateStream.listen((event) {
+    viewUpdateBroadcaster.add(event);
+  });
 
   // Initialization of packages
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,18 +33,15 @@ void main() async {
 
   // Run everything
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: EasyLocalization(
-        supportedLocales: const [
-          Locale('en', 'US'),
-          Locale('ko', 'KR'),
-        ],
-        path: 'assets/translations',
-        assetLoader: YamlAssetLoader(),
-        fallbackLocale: const Locale('en', 'US'),
-        child: const App(),
-      ),
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('ko', 'KR'),
+      ],
+      path: 'assets/translations',
+      assetLoader: YamlAssetLoader(),
+      fallbackLocale: const Locale('en', 'US'),
+      child: const App(),
     ),
   );
 

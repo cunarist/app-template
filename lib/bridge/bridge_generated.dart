@@ -11,13 +11,24 @@ import 'package:meta/meta.dart';
 import 'dart:ffi' as ffi;
 
 abstract class Bridge {
-  Future<void> startMain({dynamic hint});
+  Stream<ViewUpdateDetail> createViewUpdateStream({dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kStartMainConstMeta;
+  FlutterRustBridgeTaskConstMeta get kCreateViewUpdateStreamConstMeta;
 
-  void requestTask({required String order, required String json, dynamic hint});
+  void passUserAction(
+      {required String taskAddress, required String jsonString, dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kRequestTaskConstMeta;
+  FlutterRustBridgeTaskConstMeta get kPassUserActionConstMeta;
+}
+
+class ViewUpdateDetail {
+  final String dataAddress;
+  final Uint8List bytes;
+
+  ViewUpdateDetail({
+    required this.dataAddress,
+    required this.bytes,
+  });
 }
 
 class BridgeImpl implements Bridge {
@@ -29,39 +40,39 @@ class BridgeImpl implements Bridge {
   factory BridgeImpl.wasm(FutureOr<WasmModule> module) =>
       BridgeImpl(module as ExternalLibrary);
   BridgeImpl.raw(this._platform);
-  Future<void> startMain({dynamic hint}) {
-    return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_start_main(port_),
-      parseSuccessData: _wire2api_unit,
-      constMeta: kStartMainConstMeta,
+  Stream<ViewUpdateDetail> createViewUpdateStream({dynamic hint}) {
+    return _platform.executeStream(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_create_view_update_stream(port_),
+      parseSuccessData: _wire2api_view_update_detail,
+      constMeta: kCreateViewUpdateStreamConstMeta,
       argValues: [],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kStartMainConstMeta =>
+  FlutterRustBridgeTaskConstMeta get kCreateViewUpdateStreamConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
-        debugName: "start_main",
+        debugName: "create_view_update_stream",
         argNames: [],
       );
 
-  void requestTask(
-      {required String order, required String json, dynamic hint}) {
-    var arg0 = _platform.api2wire_String(order);
-    var arg1 = _platform.api2wire_String(json);
+  void passUserAction(
+      {required String taskAddress, required String jsonString, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(taskAddress);
+    var arg1 = _platform.api2wire_String(jsonString);
     return _platform.executeSync(FlutterRustBridgeSyncTask(
-      callFfi: () => _platform.inner.wire_request_task(arg0, arg1),
+      callFfi: () => _platform.inner.wire_pass_user_action(arg0, arg1),
       parseSuccessData: _wire2api_unit,
-      constMeta: kRequestTaskConstMeta,
-      argValues: [order, json],
+      constMeta: kPassUserActionConstMeta,
+      argValues: [taskAddress, jsonString],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kRequestTaskConstMeta =>
+  FlutterRustBridgeTaskConstMeta get kPassUserActionConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
-        debugName: "request_task",
-        argNames: ["order", "json"],
+        debugName: "pass_user_action",
+        argNames: ["taskAddress", "jsonString"],
       );
 
   void dispose() {
@@ -69,8 +80,34 @@ class BridgeImpl implements Bridge {
   }
 // Section: wire2api
 
+  String _wire2api_String(dynamic raw) {
+    return raw as String;
+  }
+
+  Uint8List _wire2api_ZeroCopyBuffer_Uint8List(dynamic raw) {
+    return raw as Uint8List;
+  }
+
+  int _wire2api_u8(dynamic raw) {
+    return raw as int;
+  }
+
+  Uint8List _wire2api_uint_8_list(dynamic raw) {
+    return raw as Uint8List;
+  }
+
   void _wire2api_unit(dynamic raw) {
     return;
+  }
+
+  ViewUpdateDetail _wire2api_view_update_detail(dynamic raw) {
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return ViewUpdateDetail(
+      dataAddress: _wire2api_String(arr[0]),
+      bytes: _wire2api_ZeroCopyBuffer_Uint8List(arr[1]),
+    );
   }
 }
 
@@ -199,35 +236,35 @@ class BridgeWire implements FlutterRustBridgeWireBase {
   late final _init_frb_dart_api_dl = _init_frb_dart_api_dlPtr
       .asFunction<int Function(ffi.Pointer<ffi.Void>)>();
 
-  void wire_start_main(
+  void wire_create_view_update_stream(
     int port_,
   ) {
-    return _wire_start_main(
+    return _wire_create_view_update_stream(
       port_,
     );
   }
 
-  late final _wire_start_mainPtr =
+  late final _wire_create_view_update_streamPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'wire_start_main');
-  late final _wire_start_main =
-      _wire_start_mainPtr.asFunction<void Function(int)>();
+          'wire_create_view_update_stream');
+  late final _wire_create_view_update_stream =
+      _wire_create_view_update_streamPtr.asFunction<void Function(int)>();
 
-  WireSyncReturn wire_request_task(
-    ffi.Pointer<wire_uint_8_list> order,
-    ffi.Pointer<wire_uint_8_list> json,
+  WireSyncReturn wire_pass_user_action(
+    ffi.Pointer<wire_uint_8_list> task_address,
+    ffi.Pointer<wire_uint_8_list> json_string,
   ) {
-    return _wire_request_task(
-      order,
-      json,
+    return _wire_pass_user_action(
+      task_address,
+      json_string,
     );
   }
 
-  late final _wire_request_taskPtr = _lookup<
+  late final _wire_pass_user_actionPtr = _lookup<
       ffi.NativeFunction<
           WireSyncReturn Function(ffi.Pointer<wire_uint_8_list>,
-              ffi.Pointer<wire_uint_8_list>)>>('wire_request_task');
-  late final _wire_request_task = _wire_request_taskPtr.asFunction<
+              ffi.Pointer<wire_uint_8_list>)>>('wire_pass_user_action');
+  late final _wire_pass_user_action = _wire_pass_user_actionPtr.asFunction<
       WireSyncReturn Function(
           ffi.Pointer<wire_uint_8_list>, ffi.Pointer<wire_uint_8_list>)>();
 

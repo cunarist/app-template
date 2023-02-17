@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_window_close/flutter_window_close.dart';
-import 'state.dart';
 import 'value.dart';
 import 'bridge/ffi.dart';
 import 'dart:convert';
+import 'main.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -82,32 +81,36 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Consumer<AppState>(
-              builder: (context, appState, child) => Text(
-                  'counter.informationText'.tr(namedArgs: {
-                'theValue': appState.tester.counterValue.toString()
-              })),
+            StreamBuilder<ViewUpdateDetail>(
+              stream: viewUpdateBroadcaster.stream.where((viewUpdateDetail) {
+                return viewUpdateDetail.dataAddress == 'someDataCategory.count';
+              }),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  String jsonString = utf8.decode(snapshot.data!.bytes);
+                  Map jsonObject = json.decode(jsonString);
+                  return Text('counter.informationText'.tr(
+                      namedArgs: {'theValue': jsonObject['value'].toString()}));
+                } else {
+                  return Text('counter.blankText'.tr());
+                }
+              },
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.read<AppState>().setState((AppState s) async {
-            int original = s.tester.counterValue;
-            int calculated = original;
-            Map jsonObject = {'theValue': 77};
-            String jsonString = json.encode(jsonObject);
-            api.requestTask(
-              order: 'someCategory.addOne',
-              json: jsonString,
-            );
-            api.requestTask(
-              order: 'someCategory.multiplyTwo',
-              json: jsonString,
-            );
-            s.tester.counterValue = calculated;
-          });
+          Map jsonObject = {'before': 77};
+          String jsonString = json.encode(jsonObject);
+          api.passUserAction(
+            taskAddress: 'someTaskCategory.addOne',
+            jsonString: jsonString,
+          );
+          api.passUserAction(
+            taskAddress: 'someTaskCategory.multiplyTwo',
+            jsonString: jsonString,
+          );
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
