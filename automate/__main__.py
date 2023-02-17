@@ -81,7 +81,7 @@ elif sys.argv[1] == "config-filling":
         if item_key in written_pairs.keys():
             item_value = written_pairs[item_key]
             lines[turn] = f"{item_key}={item_value}"
-    text = "".join(lines)
+    text = "\n".join(lines)
     filepath = ".env"
     with open(filepath, mode="w", encoding="utf8") as file:
         file.write(text)
