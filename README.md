@@ -48,7 +48,7 @@ Go to the [official downloads page](https://git-scm.com/downloads)
 
 ## Preparing Python
 
-Download it from the app store if your system doesn't provide a pre-installed version. It's also available at [official downloads page](https://www.python.org/downloads/).
+Download it from the app store if your system doesn't provide a pre-installed version. It's also available at [official downloads page](https://www.python.org/downloads/). Make sure Python is available in the path environment variable.
 
 ## Preparing Rust
 
@@ -57,8 +57,6 @@ Refer to the [official docs](https://doc.rust-lang.org/book/ch01-01-installation
 ## Preparing Flutter
 
 Refer to the [official docs](https://docs.flutter.dev/get-started/install).
-
-Flutter docs also offer tutorials, samples, guidance on mobile development, and a full API reference. There are many useful resources to read.
 
 ## System Verification
 
