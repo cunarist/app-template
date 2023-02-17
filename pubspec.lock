@@ -317,14 +317,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_window_close:
-    dependency: "direct main"
-    description:
-      name: flutter_window_close
-      sha256: "63f5846efbf0974ec233e6b5f468aa604a4857157f4c6c44fd482621804a0464"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.2"
   glob:
     dependency: transitive
     description:

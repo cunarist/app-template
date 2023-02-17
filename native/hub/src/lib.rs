@@ -28,5 +28,6 @@ pub async fn main() {
 #[dtor]
 fn finalize() {
     // Main thread by Flutter
+    // This code is executed before closing unless crashed
     println!("Bye!");
 }

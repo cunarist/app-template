@@ -2,12 +2,12 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'bridge/ffi.dart';
 import 'app.dart';
 import 'value.dart';
-import 'bridge/ffi.dart';
 
 var viewUpdateStream = api.createConnection();
 var viewUpdateBroadcaster = StreamController<ViewUpdateDetail>.broadcast();

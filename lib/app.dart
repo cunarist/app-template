@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_window_close/flutter_window_close.dart';
 import 'value.dart';
 import 'bridge/ffi.dart';
 import 'dart:convert';
@@ -36,16 +35,6 @@ class App extends StatelessWidget {
       }
       return true;
     }());
-
-    // Code that will be run before closing the window on desktop
-    FlutterWindowClose.setWindowShouldCloseHandler(() async {
-      assert(() {
-        // assert statement gets removed in release mode
-        debugPrint('App closing');
-        return true;
-      }());
-      return true;
-    });
 
     // Return the actual app structure
     return MaterialApp(
