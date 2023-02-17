@@ -38,7 +38,9 @@ class App extends StatelessWidget {
 
     // Return the actual app structure
     return MaterialApp(
-      title: 'appTitle'.tr(),
+      onGenerateTitle: (context) {
+        return 'appTitle'.tr();
+      },
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
           primary: primaryColor,
