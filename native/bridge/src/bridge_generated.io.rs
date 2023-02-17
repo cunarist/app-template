@@ -7,6 +7,11 @@ pub extern "C" fn wire_create_view_update_stream(port_: i64) {
 }
 
 #[no_mangle]
+pub extern "C" fn wire_connect_and_start() -> support::WireSyncReturn {
+    wire_connect_and_start_impl()
+}
+
+#[no_mangle]
 pub extern "C" fn wire_pass_user_action(
     task_address: *mut wire_uint_8_list,
     json_string: *mut wire_uint_8_list,

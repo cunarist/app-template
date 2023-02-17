@@ -15,6 +15,10 @@ abstract class Bridge {
 
   FlutterRustBridgeTaskConstMeta get kCreateViewUpdateStreamConstMeta;
 
+  void connectAndStart({dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kConnectAndStartConstMeta;
+
   void passUserAction(
       {required String taskAddress, required String jsonString, dynamic hint});
 
@@ -53,6 +57,22 @@ class BridgeImpl implements Bridge {
   FlutterRustBridgeTaskConstMeta get kCreateViewUpdateStreamConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "create_view_update_stream",
+        argNames: [],
+      );
+
+  void connectAndStart({dynamic hint}) {
+    return _platform.executeSync(FlutterRustBridgeSyncTask(
+      callFfi: () => _platform.inner.wire_connect_and_start(),
+      parseSuccessData: _wire2api_unit,
+      constMeta: kConnectAndStartConstMeta,
+      argValues: [],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kConnectAndStartConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "connect_and_start",
         argNames: [],
       );
 
@@ -249,6 +269,16 @@ class BridgeWire implements FlutterRustBridgeWireBase {
           'wire_create_view_update_stream');
   late final _wire_create_view_update_stream =
       _wire_create_view_update_streamPtr.asFunction<void Function(int)>();
+
+  WireSyncReturn wire_connect_and_start() {
+    return _wire_connect_and_start();
+  }
+
+  late final _wire_connect_and_startPtr =
+      _lookup<ffi.NativeFunction<WireSyncReturn Function()>>(
+          'wire_connect_and_start');
+  late final _wire_connect_and_start =
+      _wire_connect_and_startPtr.asFunction<WireSyncReturn Function()>();
 
   WireSyncReturn wire_pass_user_action(
     ffi.Pointer<wire_uint_8_list> task_address,

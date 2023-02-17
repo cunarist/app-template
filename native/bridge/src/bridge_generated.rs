@@ -31,6 +31,16 @@ fn wire_create_view_update_stream_impl(port_: MessagePort) {
         move || move |task_callback| Ok(create_view_update_stream(task_callback.stream_sink())),
     )
 }
+fn wire_connect_and_start_impl() -> support::WireSyncReturn {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync(
+        WrapInfo {
+            debug_name: "connect_and_start",
+            port: None,
+            mode: FfiCallMode::Sync,
+        },
+        move || Ok(connect_and_start()),
+    )
+}
 fn wire_pass_user_action_impl(
     task_address: impl Wire2Api<String> + UnwindSafe,
     json_string: impl Wire2Api<String> + UnwindSafe,

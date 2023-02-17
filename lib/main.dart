@@ -22,6 +22,9 @@ void main() async {
     return true;
   }());
 
+  // Connect and start running Rust back-end
+  api.connectAndStart();
+
   // Prepare view update broadcasting
   viewUpdateStream.listen((event) {
     viewUpdateBroadcaster.add(event);

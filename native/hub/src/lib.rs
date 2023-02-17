@@ -16,7 +16,7 @@ pub static VIEW_UPDATE_SENDER: SenderHolder = OnceCell::new();
 
 #[tokio::main]
 pub async fn main() {
-    // Second thread only for Rust
+    // Thread dedicated for Rust
     loop {
         let receiver = USER_ACTION_RECEIVER.get().unwrap().lock().unwrap();
         if let Ok(user_action) = receiver.recv() {
@@ -27,6 +27,6 @@ pub async fn main() {
 
 #[dtor]
 fn finalize() {
-    // First thread mainly for Dart
+    // Main thread by Flutter
     println!("Bye!");
 }
