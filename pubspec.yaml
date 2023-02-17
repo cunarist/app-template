@@ -31,7 +31,6 @@ dependencies:
   meta: ^1.8.0
   easy_localization: ^3.0.1
   easy_localization_loader: ^1.0.1
-  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:

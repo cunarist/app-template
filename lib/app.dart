@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'value.dart';
 import 'bridge/ffi.dart';
 import 'dart:convert';
 import 'main.dart';
+import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 class App extends StatelessWidget {
@@ -12,35 +12,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeMode themeMode = ThemeMode.system;
-
-    // Debug mode code
-    assert(() {
-      // assert statement gets removed in release mode
-      String debugLocale = dotenv.env['DEBUG_LOCALE'] ?? '';
-      switch (debugLocale) {
-        case '':
-          break;
-        default:
-          List splitted = debugLocale.split('-');
-          context.setLocale(Locale(splitted[0], splitted[1]));
-      }
-      String darkMode = dotenv.env['DARK_MODE'] ?? '';
-      switch (darkMode) {
-        case 'true':
-          themeMode = ThemeMode.dark;
-          break;
-        case 'false':
-          themeMode = ThemeMode.light;
-          break;
-      }
-      return true;
-    }());
+    context.setLocale(const Locale('en', 'US'));
 
     // Return the actual app structure
     return MaterialApp(
       onGenerateTitle: (context) {
-        appWindow.title = 'appTitle'.tr(); // For desktop
+        if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+          appWindow.title = 'appTitle'.tr(); // For desktop
+        }
         return 'appTitle'.tr(); // For mobile and web
       },
       theme: ThemeData(
@@ -55,7 +34,7 @@ class App extends StatelessWidget {
           secondary: secondaryColor,
         ),
       ),
-      themeMode: themeMode,
+      themeMode: ThemeMode.system,
       home: const HomePage(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
