@@ -5,6 +5,7 @@ import 'value.dart';
 import 'bridge/ffi.dart';
 import 'dart:convert';
 import 'main.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -39,7 +40,8 @@ class App extends StatelessWidget {
     // Return the actual app structure
     return MaterialApp(
       onGenerateTitle: (context) {
-        return 'appTitle'.tr();
+        appWindow.title = 'appTitle'.tr(); // For desktop
+        return 'appTitle'.tr(); // For mobile and web
       },
       theme: ThemeData(
         colorScheme: const ColorScheme.light(

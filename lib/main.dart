@@ -47,7 +47,6 @@ void main() async {
 
   // Set desktop window shape
   doWhenWindowReady(() {
-    appWindow.title = 'appTitle'.tr();
     appWindow.minSize = minimumSize;
     appWindow.size = initialSize;
     appWindow.alignment = Alignment.center;
