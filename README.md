@@ -28,7 +28,7 @@ Currently supported platforms in Cunarist App Template are:
 
 We love contributions! If you have any suggestion or want to report a bug, please leave it as an issue or a pull request. We will try to respond as quick as possible.
 
-The goal of this template is to enable full power of Rust while using Flutter for front-end development. Rust codes and Dart codes should be detachable from each other.
+The goal of this template is to enable full power of Rust while using Flutter for front-end development. Rust code and Dart code should be detachable from each other.
 
 # 🧱 Project Structure
 
