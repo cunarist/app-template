@@ -39,9 +39,9 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/src/debug
-/android/app/src/profile
-/android/app/src/release
+/android/app/debug
+/android/app/profile
+/android/app/release
 
 # Cunarist App Template
 .vscode/
