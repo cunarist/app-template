@@ -85,7 +85,7 @@ elif sys.argv[1] == "config-filling":
     filepath = "./android/local.properties"
     with open(filepath, mode="w", encoding="utf8") as file:
         file.write(text)
-    print("Updated local.properties file from the template file in ./ folder.")
+    print("Updated local.properties file from the template file in ./android folder.")
 
     # Scan
     filepath = "./native/.cargo/config.toml"
