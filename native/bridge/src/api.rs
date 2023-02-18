@@ -27,6 +27,7 @@ static DART_HOT_RESTART_COUNT: AtomicI32 = AtomicI32::new(0);
 
 pub fn start_and_get_view_update_stream(stream: StreamSink<ViewUpdateDetail>) {
     // Thread by flutter_rust_bridge
+
     DART_HOT_RESTART_COUNT.fetch_add(1, Ordering::SeqCst);
     let hot_restart_number = DART_HOT_RESTART_COUNT.load(Ordering::SeqCst);
 
