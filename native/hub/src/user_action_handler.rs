@@ -9,9 +9,9 @@ pub async fn handle_user_action(user_action: (String, String)) {
     } else if layered_task_address[0] == "someTaskCategory" {
         if layered_task_address.len() == 1 {
         } else if layered_task_address[1] == "addOne" {
-            task::spawn_blocking(move || sample_crate_first::add_one(json_string));
+            task::spawn_blocking(move || sample_feature::add_one(json_string));
         } else if layered_task_address[1] == "multiplyTwo" {
-            task::spawn_blocking(move || sample_crate_second::multiply_two(json_string));
+            task::spawn_blocking(move || sample_feature::multiply_two(json_string));
         } else {
         }
     } else {

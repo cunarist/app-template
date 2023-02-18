@@ -14,5 +14,4 @@ tokio = { workspace = true }
 serde_json = { workspace = true }
 rand = { workspace = true }
 # In workspace
-sample_crate_first = { workspace = true }
-sample_crate_second = { workspace = true }
+sample_feature = { workspace = true }

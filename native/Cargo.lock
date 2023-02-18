@@ -256,8 +256,7 @@ dependencies = [
  "ctor",
  "once_cell",
  "rand",
- "sample_crate_first",
- "sample_crate_second",
+ "sample_feature",
  "serde_json",
  "tokio",
 ]
@@ -493,14 +492,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7b4b9743ed687d4b4bcedf9ff5eaa7398495ae14e61cba0a295704edbc7decde"
 
 [[package]]
-name = "sample_crate_first"
-version = "0.1.0"
-dependencies = [
- "serde_json",
-]
-
-[[package]]
-name = "sample_crate_second"
+name = "sample_feature"
 version = "0.1.0"
 dependencies = [
  "serde_json",

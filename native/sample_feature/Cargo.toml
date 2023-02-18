@@ -1,5 +1,5 @@
 [package]
-name = "sample_crate_first"
+name = "sample_feature"
 version = "0.1.0"
 edition = "2021"
 
