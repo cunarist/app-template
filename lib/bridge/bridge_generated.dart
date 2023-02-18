@@ -11,9 +11,9 @@ import 'package:meta/meta.dart';
 import 'dart:ffi' as ffi;
 
 abstract class Bridge {
-  Stream<ViewUpdateDetail> createConnection({dynamic hint});
+  Stream<ViewUpdateDetail> startAndGetViewUpdateStream({dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kCreateConnectionConstMeta;
+  FlutterRustBridgeTaskConstMeta get kStartAndGetViewUpdateStreamConstMeta;
 
   void passUserAction(
       {required String taskAddress, required String jsonString, dynamic hint});
@@ -40,19 +40,20 @@ class BridgeImpl implements Bridge {
   factory BridgeImpl.wasm(FutureOr<WasmModule> module) =>
       BridgeImpl(module as ExternalLibrary);
   BridgeImpl.raw(this._platform);
-  Stream<ViewUpdateDetail> createConnection({dynamic hint}) {
+  Stream<ViewUpdateDetail> startAndGetViewUpdateStream({dynamic hint}) {
     return _platform.executeStream(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_create_connection(port_),
+      callFfi: (port_) =>
+          _platform.inner.wire_start_and_get_view_update_stream(port_),
       parseSuccessData: _wire2api_view_update_detail,
-      constMeta: kCreateConnectionConstMeta,
+      constMeta: kStartAndGetViewUpdateStreamConstMeta,
       argValues: [],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kCreateConnectionConstMeta =>
+  FlutterRustBridgeTaskConstMeta get kStartAndGetViewUpdateStreamConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
-        debugName: "create_connection",
+        debugName: "start_and_get_view_update_stream",
         argNames: [],
       );
 
@@ -236,19 +237,20 @@ class BridgeWire implements FlutterRustBridgeWireBase {
   late final _init_frb_dart_api_dl = _init_frb_dart_api_dlPtr
       .asFunction<int Function(ffi.Pointer<ffi.Void>)>();
 
-  void wire_create_connection(
+  void wire_start_and_get_view_update_stream(
     int port_,
   ) {
-    return _wire_create_connection(
+    return _wire_start_and_get_view_update_stream(
       port_,
     );
   }
 
-  late final _wire_create_connectionPtr =
+  late final _wire_start_and_get_view_update_streamPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'wire_create_connection');
-  late final _wire_create_connection =
-      _wire_create_connectionPtr.asFunction<void Function(int)>();
+          'wire_start_and_get_view_update_stream');
+  late final _wire_start_and_get_view_update_stream =
+      _wire_start_and_get_view_update_streamPtr
+          .asFunction<void Function(int)>();
 
   WireSyncReturn wire_pass_user_action(
     ffi.Pointer<wire_uint_8_list> task_address,

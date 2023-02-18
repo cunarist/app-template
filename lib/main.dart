@@ -8,7 +8,7 @@ import 'bridge/ffi.dart';
 import 'app.dart';
 import 'value.dart';
 
-var viewUpdateStream = api.createConnection();
+var viewUpdateStream = api.startAndGetViewUpdateStream();
 var viewUpdateBroadcaster = StreamController<ViewUpdateDetail>.broadcast();
 
 void main() async {
@@ -18,14 +18,14 @@ void main() async {
     return true;
   }());
 
-  // Initialization of packages
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-
   // Prepare view update broadcasting
   viewUpdateStream.listen((event) {
     viewUpdateBroadcaster.add(event);
   });
+
+  // Initialization of packages
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
   // Run everything
   runApp(
