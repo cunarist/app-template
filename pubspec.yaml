@@ -36,7 +36,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.11.0
-  ffigen: ^7.2.0
+  ffigen: ^7.2.6
   flutter_lints: ^2.0.0
 
 flutter:
@@ -51,8 +51,10 @@ flutter_icons:
     generate: true
   android: "launcher_icon"
   ios: true
+  image_path_ios: "assets/app_icon_full.png"
   remove_alpha_ios: true
   windows:
     generate: true
+    icon_size: 256
   macos:
     generate: true

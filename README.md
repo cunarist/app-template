@@ -14,6 +14,7 @@ Extra features added to default Flutter template are:
 - Convenient environment variable management
 - Localization
 - Setting window properties on desktops
+- Preserving Rust logic on Dart hot reload
 
 ## Platform Support
 
@@ -24,6 +25,7 @@ Currently supported platforms in Cunarist App Template are:
 - Windows
 - Linux
 - Android
+- macOS
 
 ## Contribution
 
@@ -94,7 +96,22 @@ Set the app name and domain. This only works once and you cannot revert this.
 python automate app-naming
 ```
 
-Convert `app_icon.png` in `./assets` to apply the icon to multiple platforms with [Flutter Launcher Icons](https://pub.dev/packages/flutter_launcher_icons).
+Convert icon files in `./assets` to apply the icon to multiple platforms with [Flutter Launcher Icons](https://pub.dev/packages/flutter_launcher_icons).
+
+File `app.icon.png` is applied to:
+
+- Windows
+- Linux
+- macOS
+- Android
+
+File `app_icon_full.png` is applied to:
+
+- iOS
+
+For platforms below, icon file should be included at release.
+
+- Linux
 
 ```
 flutter pub run flutter_launcher_icons

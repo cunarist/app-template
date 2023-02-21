@@ -134,6 +134,8 @@ elif sys.argv[1] == "bridge-gen":
     command = "flutter_rust_bridge_codegen"
     command += f" -r ./native/bridge/src/api.rs"
     command += f" -d ./lib/bridge/bridge_generated.dart"
+    command += f" -c ios/Runner/bridge_generated.h"
+    command += f" -e macos/Runner/"
     os.system(command)
 
 elif sys.argv[1] == "template-update":
