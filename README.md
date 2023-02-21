@@ -8,24 +8,22 @@ Based on the default Flutter template, many additional packages and modification
 
 Extra features added to default Flutter template are:
 
-- Rust integration with ability to use multiple library crates
+- Rust integration with ability to use arbitrary number of library crates
 - MVVM pattern with state management on Rust side
-- Convenient app naming and icon generation
-- Convenient environment variable management
-- Localization
-- Setting window properties on desktops
 - Preserving Rust logic on Dart hot reload
+- Convenient app naming and icon generation
+- Convenient configuration management
+- Setting desktop window properties
 
 ## Platform Support
 
-Dart and Rust support a variety of platforms: Windows, Linux, macOS, Android, iOS and web. However, Cunarist App Template is not yet mature enough to support all of those, though it has enough potential to do so in the future.
-
-Currently supported platforms in Cunarist App Template are:
+Configuring Flutter project with various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to worry about project structure.
 
 - Windows
 - Linux
 - Android
 - macOS
+- iOS
 
 ## Contribution
 
@@ -123,20 +121,21 @@ Receive latest commits from [Cunarist App Template](https://github.com/cunarist/
 python automate template-update
 ```
 
-# 🌳 Environment Variables
+# 📝 Configuration Files
 
-Before you proceed, you need to prepare files for environment variables.
+Before you proceed, you need to prepare files for system configuration.
 
-This terminal command will generate environment variable files or update them from template files if they already exist.
+This terminal command will generate configuration files or update them from template files if they already exist.
 
 ```
 python automate config-filling
 ```
 
-Files for environment variables are not version-controlled. You might be wondering why there are multiple files for managing environment variables. It's basically because this template combines multiple programming languages.
+Files for environment variables are not version-controlled. You might be wondering about why there are multiple files for managing environment variables. It's basically because this template combines multiple programming languages.
 
-- There is no environment variable file for Dart. Use Dart's [hot reload](https://docs.flutter.dev/development/tools/hot-reload) instead. You might want to change variables directly in Dart to experiment UI stuffs such as dark mode.
+- File `./android/local.properties` contains information about Android toolchain on the computer.
 - File `./native/.cargo/config.toml` includes environment variables loaded in Rust. You might need them to locate external C++ library paths through environment variables for compilation.
+- There is no environment variable file for Dart. Use Dart's [hot reload](https://docs.flutter.dev/development/tools/hot-reload) feature instead. You might want to change variables directly in Dart to experiment UI stuffs such as dark mode.
 
 You should change values of environment variables inside these files during development to suit your needs. Environment variable files are only used in production and not included in the final release.
 
