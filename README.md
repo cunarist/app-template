@@ -17,7 +17,7 @@ Extra features added to default Flutter template are:
 
 ## Platform Support
 
-Configuring Flutter project with various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to worry about project structure.
+Configuring Flutter project with various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to worry about the project structure.
 
 - Windows
 - Linux
