@@ -1,3 +1,6 @@
+mod model;
+mod user_action_handler;
+
 use ctor::dtor;
 use once_cell::sync::OnceCell;
 use rand::Rng;
@@ -7,9 +10,6 @@ use std::sync::mpsc::Sender;
 use std::sync::Mutex;
 use tokio::task;
 use user_action_handler::handle_user_action;
-
-mod model;
-mod user_action_handler;
 
 type UserActionReceiver = OnceCell<Mutex<Receiver<(String, String)>>>;
 pub static USER_ACTION_RECEIVER: UserActionReceiver = OnceCell::new();
