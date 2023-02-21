@@ -8,27 +8,27 @@ use std::sync::Mutex;
 use tokio::task;
 use user_action_handler::handle_user_action;
 
+mod model;
 mod user_action_handler;
-mod view_model;
 
-type ReceiverHolder = OnceCell<Mutex<Receiver<(String, String)>>>;
-pub static USER_ACTION_RECEIVER: ReceiverHolder = OnceCell::new();
-type SenderHolder = OnceCell<Mutex<Sender<(String, Vec<u8>)>>>;
-pub static VIEW_UPDATE_SENDER: SenderHolder = OnceCell::new();
+type UserActionReceiver = OnceCell<Mutex<Receiver<(String, String)>>>;
+pub static USER_ACTION_RECEIVER: UserActionReceiver = OnceCell::new();
+type ViewmodelUpdateSender = OnceCell<Mutex<Sender<(String, Vec<u8>)>>>;
+pub static VIEWMODEL_UPDATE_SENDER: ViewmodelUpdateSender = OnceCell::new();
 
 #[tokio::main]
 pub async fn main() {
     // Thread dedicated for Rust
-    let receiver = USER_ACTION_RECEIVER.get().unwrap().lock().unwrap();
-    let sender = VIEW_UPDATE_SENDER.get().unwrap().lock().unwrap();
+    let user_action_receiver = USER_ACTION_RECEIVER.get().unwrap().lock().unwrap();
+    let viewmodel_update_sender = VIEWMODEL_UPDATE_SENDER.get().unwrap().lock().unwrap();
     loop {
-        if let Ok(user_action) = receiver.recv() {
+        if let Ok(user_action) = user_action_receiver.recv() {
             let mut rng = rand::thread_rng();
             let number = rng.gen_range(1..101);
             let json_string = json!({ "value": number }).to_string();
-            sender
+            viewmodel_update_sender
                 .send((
-                    "someDataCategory.count".to_string(),
+                    String::from("someDataCategory.count"),
                     json_string.as_bytes().to_vec(),
                 ))
                 .ok();

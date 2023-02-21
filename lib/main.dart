@@ -9,7 +9,7 @@ import 'app.dart';
 import 'value.dart';
 
 var viewUpdateStream = api.startAndGetViewUpdateStream();
-var viewUpdateBroadcaster = StreamController<ViewUpdateDetail>.broadcast();
+var viewUpdateBroadcaster = StreamController<String>.broadcast();
 
 void main() async {
   // Debug mode code

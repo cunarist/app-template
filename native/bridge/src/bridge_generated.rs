@@ -37,6 +37,21 @@ fn wire_start_and_get_view_update_stream_impl(port_: MessagePort) {
         },
     )
 }
+fn wire_read_viewmodel_impl(
+    data_address: impl Wire2Api<String> + UnwindSafe,
+) -> support::WireSyncReturn {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync(
+        WrapInfo {
+            debug_name: "read_viewmodel",
+            port: None,
+            mode: FfiCallMode::Sync,
+        },
+        move || {
+            let api_data_address = data_address.wire2api();
+            Ok(read_viewmodel(api_data_address))
+        },
+    )
+}
 fn wire_pass_user_action_impl(
     task_address: impl Wire2Api<String> + UnwindSafe,
     json_string: impl Wire2Api<String> + UnwindSafe,
@@ -84,13 +99,6 @@ impl Wire2Api<u8> for u8 {
 }
 
 // Section: impl IntoDart
-
-impl support::IntoDart for ViewUpdateDetail {
-    fn into_dart(self) -> support::DartAbi {
-        vec![self.data_address.into_dart(), self.bytes.into_dart()].into_dart()
-    }
-}
-impl support::IntoDartExceptPrimitive for ViewUpdateDetail {}
 
 // Section: executor
 

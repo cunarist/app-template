@@ -10,24 +10,18 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'dart:ffi' as ffi;
 
 abstract class Bridge {
-  Stream<ViewUpdateDetail> startAndGetViewUpdateStream({dynamic hint});
+  Stream<String> startAndGetViewUpdateStream({dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kStartAndGetViewUpdateStreamConstMeta;
+
+  Uint8List? readViewmodel({required String dataAddress, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kReadViewmodelConstMeta;
 
   void passUserAction(
       {required String taskAddress, required String jsonString, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kPassUserActionConstMeta;
-}
-
-class ViewUpdateDetail {
-  final String dataAddress;
-  final Uint8List bytes;
-
-  ViewUpdateDetail({
-    required this.dataAddress,
-    required this.bytes,
-  });
 }
 
 class BridgeImpl implements Bridge {
@@ -39,11 +33,11 @@ class BridgeImpl implements Bridge {
   factory BridgeImpl.wasm(FutureOr<WasmModule> module) =>
       BridgeImpl(module as ExternalLibrary);
   BridgeImpl.raw(this._platform);
-  Stream<ViewUpdateDetail> startAndGetViewUpdateStream({dynamic hint}) {
+  Stream<String> startAndGetViewUpdateStream({dynamic hint}) {
     return _platform.executeStream(FlutterRustBridgeTask(
       callFfi: (port_) =>
           _platform.inner.wire_start_and_get_view_update_stream(port_),
-      parseSuccessData: _wire2api_view_update_detail,
+      parseSuccessData: _wire2api_String,
       constMeta: kStartAndGetViewUpdateStreamConstMeta,
       argValues: [],
       hint: hint,
@@ -54,6 +48,23 @@ class BridgeImpl implements Bridge {
       const FlutterRustBridgeTaskConstMeta(
         debugName: "start_and_get_view_update_stream",
         argNames: [],
+      );
+
+  Uint8List? readViewmodel({required String dataAddress, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(dataAddress);
+    return _platform.executeSync(FlutterRustBridgeSyncTask(
+      callFfi: () => _platform.inner.wire_read_viewmodel(arg0),
+      parseSuccessData: _wire2api_opt_uint_8_list,
+      constMeta: kReadViewmodelConstMeta,
+      argValues: [dataAddress],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kReadViewmodelConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "read_viewmodel",
+        argNames: ["dataAddress"],
       );
 
   void passUserAction(
@@ -84,8 +95,8 @@ class BridgeImpl implements Bridge {
     return raw as String;
   }
 
-  Uint8List _wire2api_ZeroCopyBuffer_Uint8List(dynamic raw) {
-    return raw as Uint8List;
+  Uint8List? _wire2api_opt_uint_8_list(dynamic raw) {
+    return raw == null ? null : _wire2api_uint_8_list(raw);
   }
 
   int _wire2api_u8(dynamic raw) {
@@ -98,16 +109,6 @@ class BridgeImpl implements Bridge {
 
   void _wire2api_unit(dynamic raw) {
     return;
-  }
-
-  ViewUpdateDetail _wire2api_view_update_detail(dynamic raw) {
-    final arr = raw as List<dynamic>;
-    if (arr.length != 2)
-      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
-    return ViewUpdateDetail(
-      dataAddress: _wire2api_String(arr[0]),
-      bytes: _wire2api_ZeroCopyBuffer_Uint8List(arr[1]),
-    );
   }
 }
 
@@ -250,6 +251,21 @@ class BridgeWire implements FlutterRustBridgeWireBase {
   late final _wire_start_and_get_view_update_stream =
       _wire_start_and_get_view_update_streamPtr
           .asFunction<void Function(int)>();
+
+  WireSyncReturn wire_read_viewmodel(
+    ffi.Pointer<wire_uint_8_list> data_address,
+  ) {
+    return _wire_read_viewmodel(
+      data_address,
+    );
+  }
+
+  late final _wire_read_viewmodelPtr = _lookup<
+      ffi.NativeFunction<
+          WireSyncReturn Function(
+              ffi.Pointer<wire_uint_8_list>)>>('wire_read_viewmodel');
+  late final _wire_read_viewmodel = _wire_read_viewmodelPtr
+      .asFunction<WireSyncReturn Function(ffi.Pointer<wire_uint_8_list>)>();
 
   WireSyncReturn wire_pass_user_action(
     ffi.Pointer<wire_uint_8_list> task_address,

@@ -9,15 +9,15 @@ Based on the default Flutter template, many additional packages and modification
 Extra features added to default Flutter template are:
 
 - Rust integration with ability to use arbitrary number of library crates
-- MVVM pattern with state management on Rust side
+- MVVM pattern with easy viewmodel binding from Dart and viewmodel update from Rust
+- Convenient configuration management
 - Preserving Rust logic on Dart hot reload
 - Convenient app naming and icon generation
-- Convenient configuration management
 - Setting desktop window properties
 
 ## Platform Support
 
-Configuring Flutter project with various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to worry about the project structure.
+Configuring Flutter project targetting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to worry anything about the project structure.
 
 - Windows
 - Linux
@@ -35,7 +35,7 @@ The goal of this template is to enable full power of Rust while using Flutter fo
 
 **Flutter** deals with cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through native steams.
 
-This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive latest commits from the template repository with the Python command stated below.
+This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive latest commits from this template repository with the automated Python command stated below.
 
 # 👜 System Preparation
 

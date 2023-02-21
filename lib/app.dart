@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'value.dart';
@@ -53,14 +54,22 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            StreamBuilder<ViewUpdateDetail>(
-              stream: viewUpdateBroadcaster.stream.where((detail) {
-                return detail.dataAddress == 'someDataCategory.count';
+            StreamBuilder<String>(
+              stream: viewUpdateBroadcaster.stream.where((dataAddress) {
+                return dataAddress == 'someDataCategory.count';
               }),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  String jsonString = utf8.decode(snapshot.data!.bytes);
-                  Map jsonObject = json.decode(jsonString);
+                  Uint8List? bytes = api.readViewmodel(
+                    dataAddress: 'someDataCategory.count',
+                  );
+                  Map jsonObject;
+                  if (bytes != null) {
+                    String jsonString = utf8.decode(bytes);
+                    jsonObject = json.decode(jsonString);
+                  } else {
+                    jsonObject = {'value': '??'};
+                  }
                   return Text('counter.informationText'.tr(
                       namedArgs: {'theValue': jsonObject['value'].toString()}));
                 } else {
