@@ -94,7 +94,7 @@ Set the app name and domain. This only works once and you cannot revert this.
 python automate app-naming
 ```
 
-Convert icon files in `./assets` to apply the icon to multiple platforms with [Flutter Launcher Icons](https://pub.dev/packages/flutter_launcher_icons). File `app.icon.png` is applied to Windows, Linux, macOS and Android File `app_icon_full.png` is applied to iOS. Including the icon manually is required for Linux.
+Apply `app_icon_full.png` file in `./assets` to multiple platforms with [Flutter Launcher Icons](https://pub.dev/packages/flutter_launcher_icons). Appropriate rounding and scaling are applied per platform with the power of Python. On Linux, you should include the icon manually in the distribution package.
 
 ```
 python automate icon-gen
