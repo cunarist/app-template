@@ -131,13 +131,11 @@ This terminal command will generate configuration files or update them from temp
 python automate config-filling
 ```
 
-Files for environment variables are not version-controlled. You might be wondering about why there are multiple files for managing environment variables. It's basically because this template combines multiple programming languages.
-
 - File `./android/local.properties` contains information about Android toolchain on the computer.
 - File `./native/.cargo/config.toml` includes environment variables loaded in Rust. You might need them to locate external C++ library paths through environment variables for compilation.
 - There is no environment variable file for Dart. Use Dart's [hot reload](https://docs.flutter.dev/development/tools/hot-reload) feature instead. You might want to change variables directly in Dart to experiment UI stuffs such as dark mode.
 
-You should change values of environment variables inside these files during development to suit your needs. Environment variable files are only used in production and not included in the final release.
+Configuration files are not version-controlled. You should change fields inside these files during development to make things work on your computer. Those information are only used in production and not included in the final release.
 
 # 🍳 Actual Development
 
