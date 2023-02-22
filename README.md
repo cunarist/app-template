@@ -273,8 +273,6 @@ If the characteristic of a specific Rust API is different from other Rust APIs, 
 
 For faster and easier development, Cunarist App Template relies on Python scripts in `./automate` for automation.
 
-[Black](https://black.readthedocs.io/en/stable/) formatter is used for maintaining quality Python code.
-
 # 📁 Folder Structure
 
 Most of the top-level folders come from the default Flutter template.
