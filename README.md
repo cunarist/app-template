@@ -17,7 +17,7 @@ Extra features added to the default Flutter template are:
 
 ## Platform Support
 
-Configuring the Flutter project targetting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to reinvent the wheel.
+Configuring the Flutter project targeting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to reinvent the wheel.
 
 - Windows
 - Linux
@@ -72,7 +72,7 @@ flutter doctor
 
 ## Extra Steps
 
-If you are targeting Android, iOS, or the web, there are extra steps involved. Refer to [flutter_rust_bridge docs](https://cjycode.com/flutter_rust_bridge/template/setup.html).
+If you are targeting Android, macOS, iOS, or the web, there are extra steps involved. Refer to [flutter_rust_bridge docs](https://cjycode.com/flutter_rust_bridge/template/setup.html).
 
 # 🗃️ Setting Up
 
