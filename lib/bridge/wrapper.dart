@@ -1,6 +1,10 @@
 import 'dart:typed_data';
 import 'dart:convert';
 import 'ffi.dart';
+import 'dart:async';
+
+var viewmodelUpdateStream = api.startAndGetViewmodelUpdateStream();
+var viewmodelUpdateBroadcaster = StreamController<String>.broadcast();
 
 dynamic readViewmodelAsJson(String dataAddress) {
   Uint8List? bytes = api.readViewmodel(

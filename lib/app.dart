@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'value.dart';
 import 'bridge/wrapper.dart';
-import 'main.dart';
 import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
@@ -53,7 +52,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StreamBuilder<String>(
-              stream: viewUpdateBroadcaster.stream.where((dataAddress) {
+              stream: viewmodelUpdateBroadcaster.stream.where((dataAddress) {
                 return dataAddress == 'someDataCategory.count';
               }),
               builder: (context, snapshot) {

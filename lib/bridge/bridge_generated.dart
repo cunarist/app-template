@@ -10,9 +10,9 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'dart:ffi' as ffi;
 
 abstract class Bridge {
-  Stream<String> startAndGetViewUpdateStream({dynamic hint});
+  Stream<String> startAndGetViewmodelUpdateStream({dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kStartAndGetViewUpdateStreamConstMeta;
+  FlutterRustBridgeTaskConstMeta get kStartAndGetViewmodelUpdateStreamConstMeta;
 
   Uint8List? readViewmodel(
       {required String dataAddress, required bool takeOwnership, dynamic hint});
@@ -34,22 +34,23 @@ class BridgeImpl implements Bridge {
   factory BridgeImpl.wasm(FutureOr<WasmModule> module) =>
       BridgeImpl(module as ExternalLibrary);
   BridgeImpl.raw(this._platform);
-  Stream<String> startAndGetViewUpdateStream({dynamic hint}) {
+  Stream<String> startAndGetViewmodelUpdateStream({dynamic hint}) {
     return _platform.executeStream(FlutterRustBridgeTask(
       callFfi: (port_) =>
-          _platform.inner.wire_start_and_get_view_update_stream(port_),
+          _platform.inner.wire_start_and_get_viewmodel_update_stream(port_),
       parseSuccessData: _wire2api_String,
-      constMeta: kStartAndGetViewUpdateStreamConstMeta,
+      constMeta: kStartAndGetViewmodelUpdateStreamConstMeta,
       argValues: [],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kStartAndGetViewUpdateStreamConstMeta =>
-      const FlutterRustBridgeTaskConstMeta(
-        debugName: "start_and_get_view_update_stream",
-        argNames: [],
-      );
+  FlutterRustBridgeTaskConstMeta
+      get kStartAndGetViewmodelUpdateStreamConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "start_and_get_viewmodel_update_stream",
+            argNames: [],
+          );
 
   Uint8List? readViewmodel(
       {required String dataAddress,
@@ -247,19 +248,19 @@ class BridgeWire implements FlutterRustBridgeWireBase {
   late final _init_frb_dart_api_dl = _init_frb_dart_api_dlPtr
       .asFunction<int Function(ffi.Pointer<ffi.Void>)>();
 
-  void wire_start_and_get_view_update_stream(
+  void wire_start_and_get_viewmodel_update_stream(
     int port_,
   ) {
-    return _wire_start_and_get_view_update_stream(
+    return _wire_start_and_get_viewmodel_update_stream(
       port_,
     );
   }
 
-  late final _wire_start_and_get_view_update_streamPtr =
+  late final _wire_start_and_get_viewmodel_update_streamPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'wire_start_and_get_view_update_stream');
-  late final _wire_start_and_get_view_update_stream =
-      _wire_start_and_get_view_update_streamPtr
+          'wire_start_and_get_viewmodel_update_stream');
+  late final _wire_start_and_get_viewmodel_update_stream =
+      _wire_start_and_get_viewmodel_update_streamPtr
           .asFunction<void Function(int)>();
 
   WireSyncReturn wire_read_viewmodel(

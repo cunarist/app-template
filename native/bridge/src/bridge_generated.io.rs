@@ -2,8 +2,8 @@ use super::*;
 // Section: wire functions
 
 #[no_mangle]
-pub extern "C" fn wire_start_and_get_view_update_stream(port_: i64) {
-    wire_start_and_get_view_update_stream_impl(port_)
+pub extern "C" fn wire_start_and_get_viewmodel_update_stream(port_: i64) {
+    wire_start_and_get_viewmodel_update_stream_impl(port_)
 }
 
 #[no_mangle]

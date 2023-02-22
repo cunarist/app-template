@@ -26,7 +26,7 @@ uintptr_t new_dart_opaque(Dart_Handle handle);
 
 intptr_t init_frb_dart_api_dl(void *obj);
 
-void wire_start_and_get_view_update_stream(int64_t port_);
+void wire_start_and_get_viewmodel_update_stream(int64_t port_);
 
 WireSyncReturn wire_read_viewmodel(struct wire_uint_8_list *data_address, bool take_ownership);
 
@@ -39,7 +39,7 @@ void free_WireSyncReturn(WireSyncReturn ptr);
 
 static int64_t dummy_method_to_enforce_bundling(void) {
     int64_t dummy_var = 0;
-    dummy_var ^= ((int64_t) (void*) wire_start_and_get_view_update_stream);
+    dummy_var ^= ((int64_t) (void*) wire_start_and_get_viewmodel_update_stream);
     dummy_var ^= ((int64_t) (void*) wire_read_viewmodel);
     dummy_var ^= ((int64_t) (void*) wire_send_user_action);
     dummy_var ^= ((int64_t) (void*) new_uint_8_list_0);

@@ -22,7 +22,7 @@ static VIEWMODEL: ViewModel = OnceCell::new();
 static IS_RUST_LOGIC_STARTED: AtomicBool = AtomicBool::new(false);
 static DART_HOT_RESTART_COUNT: AtomicI32 = AtomicI32::new(0);
 
-pub fn start_and_get_view_update_stream(view_update_stream: StreamSink<String>) {
+pub fn start_and_get_viewmodel_update_stream(viewmodel_update_stream: StreamSink<String>) {
     // Thread by flutter_rust_bridge
 
     DART_HOT_RESTART_COUNT.fetch_add(1, Ordering::SeqCst);
@@ -55,7 +55,7 @@ pub fn start_and_get_view_update_stream(view_update_stream: StreamSink<String>) 
                 let bytes = received.1;
                 let mut viewmodel = VIEWMODEL.get().unwrap().lock().unwrap();
                 viewmodel.insert(data_address.clone(), bytes);
-                view_update_stream.add(data_address);
+                viewmodel_update_stream.add(data_address);
             }
             if hot_restart_number < DART_HOT_RESTART_COUNT.load(Ordering::SeqCst) {
                 // When another `StreamSink` is established by hot restart

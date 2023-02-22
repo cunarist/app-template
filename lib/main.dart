@@ -1,15 +1,11 @@
 import 'dart:io';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'bridge/ffi.dart';
 import 'app.dart';
 import 'value.dart';
-
-var viewUpdateStream = api.startAndGetViewUpdateStream();
-var viewUpdateBroadcaster = StreamController<String>.broadcast();
+import 'bridge/wrapper.dart';
 
 void main() async {
   // Debug mode code
@@ -19,8 +15,8 @@ void main() async {
   }());
 
   // Prepare view update broadcasting
-  viewUpdateStream.listen((event) {
-    viewUpdateBroadcaster.add(event);
+  viewmodelUpdateStream.listen((event) {
+    viewmodelUpdateBroadcaster.add(event);
   });
 
   // Initialization of packages
