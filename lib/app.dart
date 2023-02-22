@@ -1,9 +1,7 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'value.dart';
-import 'bridge/ffi.dart';
-import 'dart:convert';
+import 'bridge/wrapper.dart';
 import 'main.dart';
 import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -60,18 +58,13 @@ class HomePage extends StatelessWidget {
               }),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  Uint8List? bytes = api.readViewmodel(
-                    dataAddress: 'someDataCategory.count',
+                  Map? jsonValue = readViewmodelAsJson(
+                    'someDataCategory.count',
                   );
-                  Map jsonObject;
-                  if (bytes != null) {
-                    String jsonString = utf8.decode(bytes);
-                    jsonObject = json.decode(jsonString);
-                  } else {
-                    jsonObject = {'value': '??'};
-                  }
-                  return Text('counter.informationText'.tr(
-                      namedArgs: {'theValue': jsonObject['value'].toString()}));
+                  String numberText = jsonValue?['value'].toString() ?? '??';
+                  return Text('counter.informationText'.tr(namedArgs: {
+                    'theValue': numberText,
+                  }));
                 } else {
                   return Text('counter.blankText'.tr());
                 }
@@ -82,16 +75,9 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Map jsonObject = {'before': 77};
-          String jsonString = json.encode(jsonObject);
-          api.passUserAction(
-            taskAddress: 'someTaskCategory.addOne',
-            jsonString: jsonString,
-          );
-          api.passUserAction(
-            taskAddress: 'someTaskCategory.multiplyTwo',
-            jsonString: jsonString,
-          );
+          Map jsonValue = {'before': 77};
+          sendUserAction('someTaskCategory.addOne', jsonValue);
+          sendUserAction('someTaskCategory.multiplyTwo', jsonValue);
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

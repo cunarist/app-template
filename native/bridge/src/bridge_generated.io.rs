@@ -9,16 +9,17 @@ pub extern "C" fn wire_start_and_get_view_update_stream(port_: i64) {
 #[no_mangle]
 pub extern "C" fn wire_read_viewmodel(
     data_address: *mut wire_uint_8_list,
+    take_ownership: bool,
 ) -> support::WireSyncReturn {
-    wire_read_viewmodel_impl(data_address)
+    wire_read_viewmodel_impl(data_address, take_ownership)
 }
 
 #[no_mangle]
-pub extern "C" fn wire_pass_user_action(
+pub extern "C" fn wire_send_user_action(
     task_address: *mut wire_uint_8_list,
     json_string: *mut wire_uint_8_list,
 ) -> support::WireSyncReturn {
-    wire_pass_user_action_impl(task_address, json_string)
+    wire_send_user_action_impl(task_address, json_string)
 }
 
 // Section: allocate functions

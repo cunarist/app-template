@@ -109,28 +109,6 @@ elif sys.argv[1] == "config-filling":
     print("Now go ahead and fill out the fields in those files!")
 
 elif sys.argv[1] == "bridge-gen":
-    # Clear bridge folder
-    folderpath = f"./lib/bridge"
-    if os.path.exists(folderpath) and os.path.isdir(folderpath):
-        shutil.rmtree(folderpath)
-
-    # Generate ffi.dart file
-    os.makedirs(f"./lib/bridge", exist_ok=True)
-
-    filepath = "./automate/template/ffi.dart.txt"
-    with open(filepath, mode="r", encoding="utf8") as file:
-        template_text = file.read()
-
-    crate_name = "bridge"
-    output_text = template_text
-    output_text = output_text.replace("[[CRATE]]", crate_name)
-    class_name = crate_name.replace("_", " ").title().replace(" ", "")
-    output_text = output_text.replace("[[CLASS]]", class_name)
-
-    filepath = f"./lib/bridge/ffi.dart"
-    with open(filepath, mode="w", encoding="utf8") as file:
-        file.write(output_text)
-
     command = "flutter_rust_bridge_codegen"
     command += f" -r ./native/bridge/src/api.rs"
     command += f" -d ./lib/bridge/bridge_generated.dart"

@@ -39,6 +39,7 @@ fn wire_start_and_get_view_update_stream_impl(port_: MessagePort) {
 }
 fn wire_read_viewmodel_impl(
     data_address: impl Wire2Api<String> + UnwindSafe,
+    take_ownership: impl Wire2Api<bool> + UnwindSafe,
 ) -> support::WireSyncReturn {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync(
         WrapInfo {
@@ -48,24 +49,25 @@ fn wire_read_viewmodel_impl(
         },
         move || {
             let api_data_address = data_address.wire2api();
-            Ok(read_viewmodel(api_data_address))
+            let api_take_ownership = take_ownership.wire2api();
+            Ok(read_viewmodel(api_data_address, api_take_ownership))
         },
     )
 }
-fn wire_pass_user_action_impl(
+fn wire_send_user_action_impl(
     task_address: impl Wire2Api<String> + UnwindSafe,
     json_string: impl Wire2Api<String> + UnwindSafe,
 ) -> support::WireSyncReturn {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync(
         WrapInfo {
-            debug_name: "pass_user_action",
+            debug_name: "send_user_action",
             port: None,
             mode: FfiCallMode::Sync,
         },
         move || {
             let api_task_address = task_address.wire2api();
             let api_json_string = json_string.wire2api();
-            Ok(pass_user_action(api_task_address, api_json_string))
+            Ok(send_user_action(api_task_address, api_json_string))
         },
     )
 }
@@ -92,6 +94,11 @@ where
     }
 }
 
+impl Wire2Api<bool> for bool {
+    fn wire2api(self) -> bool {
+        self
+    }
+}
 impl Wire2Api<u8> for u8 {
     fn wire2api(self) -> u8 {
         self

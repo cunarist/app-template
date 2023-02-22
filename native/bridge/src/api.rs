@@ -65,13 +65,18 @@ pub fn start_and_get_view_update_stream(view_update_stream: StreamSink<String>) 
     });
 }
 
-pub fn read_viewmodel(data_address: String) -> SyncReturn<Option<Vec<u8>>> {
-    let viewmodel = VIEWMODEL.get().unwrap().lock().unwrap();
-    let bytes = viewmodel.get(&data_address).cloned();
+pub fn read_viewmodel(data_address: String, take_ownership: bool) -> SyncReturn<Option<Vec<u8>>> {
+    let mut viewmodel = VIEWMODEL.get().unwrap().lock().unwrap();
+    let bytes;
+    if take_ownership {
+        bytes = viewmodel.remove(&data_address);
+    } else {
+        bytes = viewmodel.get(&data_address).cloned();
+    }
     SyncReturn(bytes)
 }
 
-pub fn pass_user_action(task_address: String, json_string: String) -> SyncReturn<()> {
+pub fn send_user_action(task_address: String, json_string: String) -> SyncReturn<()> {
     // Main thread by Flutter
 
     let user_action = (task_address, json_string);

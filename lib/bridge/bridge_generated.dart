@@ -14,14 +14,15 @@ abstract class Bridge {
 
   FlutterRustBridgeTaskConstMeta get kStartAndGetViewUpdateStreamConstMeta;
 
-  Uint8List? readViewmodel({required String dataAddress, dynamic hint});
+  Uint8List? readViewmodel(
+      {required String dataAddress, required bool takeOwnership, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kReadViewmodelConstMeta;
 
-  void passUserAction(
+  void sendUserAction(
       {required String taskAddress, required String jsonString, dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kPassUserActionConstMeta;
+  FlutterRustBridgeTaskConstMeta get kSendUserActionConstMeta;
 }
 
 class BridgeImpl implements Bridge {
@@ -50,13 +51,17 @@ class BridgeImpl implements Bridge {
         argNames: [],
       );
 
-  Uint8List? readViewmodel({required String dataAddress, dynamic hint}) {
+  Uint8List? readViewmodel(
+      {required String dataAddress,
+      required bool takeOwnership,
+      dynamic hint}) {
     var arg0 = _platform.api2wire_String(dataAddress);
+    var arg1 = takeOwnership;
     return _platform.executeSync(FlutterRustBridgeSyncTask(
-      callFfi: () => _platform.inner.wire_read_viewmodel(arg0),
+      callFfi: () => _platform.inner.wire_read_viewmodel(arg0, arg1),
       parseSuccessData: _wire2api_opt_uint_8_list,
       constMeta: kReadViewmodelConstMeta,
-      argValues: [dataAddress],
+      argValues: [dataAddress, takeOwnership],
       hint: hint,
     ));
   }
@@ -64,25 +69,25 @@ class BridgeImpl implements Bridge {
   FlutterRustBridgeTaskConstMeta get kReadViewmodelConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "read_viewmodel",
-        argNames: ["dataAddress"],
+        argNames: ["dataAddress", "takeOwnership"],
       );
 
-  void passUserAction(
+  void sendUserAction(
       {required String taskAddress, required String jsonString, dynamic hint}) {
     var arg0 = _platform.api2wire_String(taskAddress);
     var arg1 = _platform.api2wire_String(jsonString);
     return _platform.executeSync(FlutterRustBridgeSyncTask(
-      callFfi: () => _platform.inner.wire_pass_user_action(arg0, arg1),
+      callFfi: () => _platform.inner.wire_send_user_action(arg0, arg1),
       parseSuccessData: _wire2api_unit,
-      constMeta: kPassUserActionConstMeta,
+      constMeta: kSendUserActionConstMeta,
       argValues: [taskAddress, jsonString],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kPassUserActionConstMeta =>
+  FlutterRustBridgeTaskConstMeta get kSendUserActionConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
-        debugName: "pass_user_action",
+        debugName: "send_user_action",
         argNames: ["taskAddress", "jsonString"],
       );
 
@@ -113,6 +118,11 @@ class BridgeImpl implements Bridge {
 }
 
 // Section: api2wire
+
+@protected
+bool api2wire_bool(bool raw) {
+  return raw;
+}
 
 @protected
 int api2wire_u8(int raw) {
@@ -254,34 +264,36 @@ class BridgeWire implements FlutterRustBridgeWireBase {
 
   WireSyncReturn wire_read_viewmodel(
     ffi.Pointer<wire_uint_8_list> data_address,
+    bool take_ownership,
   ) {
     return _wire_read_viewmodel(
       data_address,
+      take_ownership,
     );
   }
 
   late final _wire_read_viewmodelPtr = _lookup<
       ffi.NativeFunction<
           WireSyncReturn Function(
-              ffi.Pointer<wire_uint_8_list>)>>('wire_read_viewmodel');
-  late final _wire_read_viewmodel = _wire_read_viewmodelPtr
-      .asFunction<WireSyncReturn Function(ffi.Pointer<wire_uint_8_list>)>();
+              ffi.Pointer<wire_uint_8_list>, ffi.Bool)>>('wire_read_viewmodel');
+  late final _wire_read_viewmodel = _wire_read_viewmodelPtr.asFunction<
+      WireSyncReturn Function(ffi.Pointer<wire_uint_8_list>, bool)>();
 
-  WireSyncReturn wire_pass_user_action(
+  WireSyncReturn wire_send_user_action(
     ffi.Pointer<wire_uint_8_list> task_address,
     ffi.Pointer<wire_uint_8_list> json_string,
   ) {
-    return _wire_pass_user_action(
+    return _wire_send_user_action(
       task_address,
       json_string,
     );
   }
 
-  late final _wire_pass_user_actionPtr = _lookup<
+  late final _wire_send_user_actionPtr = _lookup<
       ffi.NativeFunction<
           WireSyncReturn Function(ffi.Pointer<wire_uint_8_list>,
-              ffi.Pointer<wire_uint_8_list>)>>('wire_pass_user_action');
-  late final _wire_pass_user_action = _wire_pass_user_actionPtr.asFunction<
+              ffi.Pointer<wire_uint_8_list>)>>('wire_send_user_action');
+  late final _wire_send_user_action = _wire_send_user_actionPtr.asFunction<
       WireSyncReturn Function(
           ffi.Pointer<wire_uint_8_list>, ffi.Pointer<wire_uint_8_list>)>();
 

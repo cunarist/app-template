@@ -25,11 +25,11 @@ pub async fn main() {
         if let Ok(user_action) = user_action_receiver.recv() {
             let mut rng = rand::thread_rng();
             let number = rng.gen_range(1..101);
-            let json_string = json!({ "value": number }).to_string();
+            let json_value = json!({ "value": number });
             viewmodel_update_sender
                 .send((
                     String::from("someDataCategory.count"),
-                    json_string.as_bytes().to_vec(),
+                    json_value.to_string().as_bytes().to_vec(),
                 ))
                 .ok();
             task::spawn(handle_user_action(user_action));
