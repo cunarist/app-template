@@ -175,7 +175,7 @@ There are 3 layers of data flow.
 
 Rust logic updates the viewmodel. Dart listens to changes made in viewmodel and rebuilds the widgets accordingly. This system was designed to have minimal performance bottlenecks.
 
-Suppose you have a Flutter widget.
+Suppose you have a Flutter widget inside a builder.
 
 ```dart
 // ./lib/app.dart.
