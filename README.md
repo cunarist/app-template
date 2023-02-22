@@ -243,7 +243,7 @@ By default, `json` is used to communicate between Dart and Rust. Although `json`
 
 In Dart, you can use `readViewmodelAsJson` function from `bridge/wrapper.dart` module to read a viewmodel item. Type of the result value will be one of `Map`, `List`, `int`, `double`, `bool`, `String` and `null` depending on the structure you defined.
 
-You can also use `readViewmodelAsBytes` function which returns `Uint8List` representing raw bytes of a viewmodel item. If the size of a viewmodel item is large, perhaps because it's a large-resolution image, you can pass in a value of true with `takeOwnership` argument to the function to avoid copying.
+You can also use `readViewmodelAsBytes` function which returns `Uint8List` representing raw bytes of a viewmodel item. If the size of a viewmodel item is large, perhaps because it's a large-resolution image, you can pass in a value of true with `takeOwnership` argument to the function to avoid copying. Be aware that this action removes the item from the viewmodel.
 
 Keep in mind that `lib.rs` inside `./native/hub/src` is the entry point of your Rust logic.
 
