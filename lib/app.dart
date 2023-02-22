@@ -75,9 +75,8 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Map jsonValue = {'before': 77};
-          sendUserAction('someTaskCategory.addOne', jsonValue);
-          sendUserAction('someTaskCategory.multiplyTwo', jsonValue);
+          Map jsonValue = {'dummy': null};
+          sendUserAction('someTaskCategory.calculateSomething', jsonValue);
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

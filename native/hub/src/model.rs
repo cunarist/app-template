@@ -1,11 +1,9 @@
-// use anymap::AnyMap;
-// use once_cell::sync::OnceCell;
-// use std::sync::Mutex;
+use once_cell::sync::Lazy;
+use std::sync::RwLock;
 
-// type Model = OnceCell<Mutex<AnyMap>>;
-// static MODEL: Model = OnceCell::new();
+pub static COUNT: Lazy<RwLock<i32>> = Lazy::new(|| {
+    let value = 0;
+    RwLock::new(value)
+});
 
-// pub fn createModel() {
-//     let model = AnyMap::new();
-//     MODEL.set(Mutex::new(model)).ok();
-// }
+// Add more using `Lazy<RwLock<T>>`
