@@ -149,6 +149,12 @@ Check and fix problems in `./native` Rust code and `./lib` Dart code.
 python automate code-quality
 ```
 
+Check the actual sizes of compiled Rust libraries.
+
+```
+python automate size-check
+```
+
 Run the app in debug mode.
 
 ```
