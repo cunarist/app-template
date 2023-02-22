@@ -161,6 +161,10 @@ elif sys.argv[1] == "size-check":
     os.chdir(path)
     command = "cargo bloat --release"
     os.system(command)
+    path = ".."
+    os.chdir(path)
+    command = f"flutter build {sys.argv[2]} --analyze-size"
+    os.system(command)
 
 else:
     print("No such option for automation is available.")

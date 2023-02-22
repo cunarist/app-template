@@ -152,7 +152,7 @@ python automate code-quality
 Check the actual sizes of compiled Rust libraries.
 
 ```
-python automate size-check
+python automate size-check (platform)
 ```
 
 Run the app in debug mode.
