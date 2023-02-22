@@ -67,7 +67,7 @@ pub fn start_and_get_view_update_stream(view_update_stream: StreamSink<String>) 
 
 pub fn read_viewmodel(data_address: String) -> SyncReturn<Option<Vec<u8>>> {
     let viewmodel = VIEWMODEL.get().unwrap().lock().unwrap();
-    let bytes = viewmodel.get(&data_address).map(|val| val.clone());
+    let bytes = viewmodel.get(&data_address).cloned();
     SyncReturn(bytes)
 }
 

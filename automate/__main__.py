@@ -151,7 +151,15 @@ elif sys.argv[1] == "template-update":
 elif sys.argv[1] == "code-quality":
     command = "dart fix --apply"
     os.system(command)
-    command = "cargo clippy --fix --allow-dirty --manifest-path ./native/Cargo.toml"
+    path = "./native"
+    os.chdir(path)
+    command = "cargo clippy --fix --allow-dirty"
+    os.system(command)
+
+elif sys.argv[1] == "size-check":
+    path = "./native"
+    os.chdir(path)
+    command = "cargo bloat --release"
     os.system(command)
 
 else:
