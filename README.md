@@ -165,6 +165,88 @@ Build the app in release mode.
 flutter build (platform) --release
 ```
 
+# ⛓️ MVVM Pattern
+
+There are 3 layers of data flow.
+
+1. View: Dart
+1. Viewmodel: Bridge connecting Dart and Rust
+1. Model: Rust
+
+Rust logic updates the viewmodel. Dart listens to changes made in viewmodel and rebuilds the widgets accordingly. It is assured that there are minimal performance bottlenecks.
+
+Suppose you have a Flutter widget.
+
+```dart
+// ./lib/app.dart.
+
+...
+import 'bridge/wrapper.dart';
+...
+
+...
+StreamBuilder<String>(
+  stream: viewmodelUpdateBroadcaster.stream.where((dataAddress) {
+    return dataAddress == 'someDataCategory.count';
+  }),
+  builder: (context, snapshot) {
+    if (snapshot.hasData) {
+      Map? jsonValue = readViewmodelAsJson(
+        'someDataCategory.count',
+      );
+      String numberText = jsonValue?['value'].toString() ?? '??';
+      return Text('counter.informationText'.tr(namedArgs: {
+        'theValue': numberText,
+      }));
+    } else {
+      return Text('counter.blankText'.tr());
+    }
+  },
+)
+...
+```
+
+`StreamBuilder` listens to a stream from `viewmodelUpdateBroadcaster` from `bridge/wrapper.dart` module. For better performance, it only listens to events with `dataAddress` of a specific value. In other words, the widget gets notified only when the viewmodel item that they are interested in is changed.
+
+And then you have a Rust function.
+
+```rust
+// ./native/hub/sample_functions.rs
+
+use crate::model;
+use crate::VIEWMODEL_UPDATE_SENDER;
+use serde_json::json;
+
+pub fn calculate_something(json_value: serde_json::Value) {
+    let _ = json_value;
+
+    let mut value = model::COUNT.write().unwrap();
+    *value = sample_feature::add_seven(*value);
+    println!("{:}", *value);
+    let json_value = json!({ "value": *value });
+
+    let viewmodel_update_sender = VIEWMODEL_UPDATE_SENDER
+        .get().unwrap().lock().unwrap();
+    viewmodel_update_sender
+        .send((
+            String::from("someDataCategory.count"),
+            json_value.to_string().as_bytes().to_vec(),
+        ))
+        .ok();
+}
+
+```
+
+You perform some calculations and perhaps interact with your custom data model. Then you update the viewmodel through `VIEWMODEL_UPDATE_SENDER` channel sender with `Vec<u8>` bytes data. Because Dart widgets are bound to viewmodel items, updating them will automatically trigger related widgets to be rebuilt.
+
+By default, `json` is used to communicate between Dart and Rust. Although `json` data has bigger size compared to that of `protobuf` or `messagepack`, it has a number of advantages to be chosen. Thanks to extreme optimizations of `json` libraries of both Dart and Rust, its encoding and decoding performance is considerably faster than others. It also has highly readable syntax and its structure is very flexible. You can use it to pass basic texts or numbers as well as complex graph data, etc.
+
+In Dart, you can use `readViewmodelAsJson` function from `bridge/wrapper.dart` module to read a viewmodel item. Type of the result value will be one of `Map`, `List`, `int`, `double`, `bool`, `String` and `null` depending on the structure you defined.
+
+You can also use `readViewmodelAsBytes` function which returns `Uint8List` representing raw bytes of a viewmodel item. If the size of a viewmodel item is large, perhaps because it's a large-resolution image, you can pass in a value of true with `takeOwnership` argument to the function in order to avoid copying.
+
+Keep in mind that `lib.rs` inside `./native/hub/src` is the entry point of your Rust logic.
+
 # 📜 Rules
 
 ## Allowed Modification
