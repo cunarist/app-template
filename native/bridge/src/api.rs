@@ -67,12 +67,11 @@ pub fn start_and_get_viewmodel_update_stream(viewmodel_update_stream: StreamSink
 
 pub fn read_viewmodel(data_address: String, take_ownership: bool) -> SyncReturn<Option<Vec<u8>>> {
     let mut viewmodel = VIEWMODEL.get().unwrap().lock().unwrap();
-    let bytes;
-    if take_ownership {
-        bytes = viewmodel.remove(&data_address);
+    let bytes = if take_ownership {
+        viewmodel.remove(&data_address)
     } else {
-        bytes = viewmodel.get(&data_address).cloned();
-    }
+        viewmodel.get(&data_address).cloned()
+    };
     SyncReturn(bytes)
 }
 

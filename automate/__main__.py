@@ -156,7 +156,7 @@ elif sys.argv[1] == "template-update":
     os.system(command)
 
 elif sys.argv[1] == "code-quality":
-    command = "python -m black ."
+    command = "black ."
     os.system(command)
     command = "dart fix --apply"
     os.system(command)
