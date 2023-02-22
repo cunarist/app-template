@@ -49,7 +49,7 @@ Go to the [official downloads page](https://git-scm.com/downloads)
 
 ## Preparing Python
 
-Download it from the app store if your system doesn't provide a pre-installed version. It's also available at [official downloads page](https://www.python.org/downloads/). Make sure Python is available in the path environment variable.
+Download it from the app store if your system doesn't provide a pre-installed version. It's also available at [official downloads page](https://www.python.org/downloads/). Make sure `python` is available in the path environment variable.
 
 ## Preparing Rust
 
