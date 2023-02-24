@@ -57,8 +57,9 @@ class HomePage extends StatelessWidget {
               }),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  Map? jsonValue =
-                      readViewmodelAsJson('someDataCategory.count');
+                  Map? jsonValue = readViewmodelAsJson(
+                    'someDataCategory.count',
+                  );
                   String numberText = jsonValue?['value'].toString() ?? '??';
                   return Text('counter.informationText'.tr(namedArgs: {
                     'theValue': numberText,
