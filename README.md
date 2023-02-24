@@ -246,11 +246,12 @@ Keep in mind that `lib.rs` inside `./native/hub/src` is the entry point of your 
 
 Be careful all the time! You shouldn't be editing any file without enough knowledge of how it works. Below are the top-level files and folders that are allowed to edit during app development:
 
-### Dart Related
+### Flutter Related
 
 - `lib`: Dart modules.
   - Do not modify the `bridge` folder inside.
 - `pubspec.yaml`: Dart settings and dependencies.
+- `assets`: Asset files.
 
 ### Rust Related
 
