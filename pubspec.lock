@@ -292,7 +292,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_rust_bridge:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_rust_bridge
       sha256: c354537e3566d13d9dab24c8724ab69c12f5a461e6e9bad14fd12069efe01dc8
