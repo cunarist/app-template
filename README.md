@@ -178,12 +178,12 @@ import 'bridge/wrapper.dart';
 ...
 StreamBuilder<String>(
   stream: viewmodelUpdateBroadcaster.stream.where((itemAddress) {
-    return itemAddress == 'someDataCategory.count';
+    return itemAddress == 'someItemCategory.count';
   }),
   builder: (context, snapshot) {
     if (snapshot.hasData) {
       Map? jsonValue = readViewmodelAsJson(
-        'someDataCategory.count',
+        'someItemCategory.count',
       );
       String numberText = jsonValue?['value'].toString() ?? '??';
       return Text('counter.informationText'.tr(namedArgs: {
@@ -217,8 +217,9 @@ pub fn calculate_something(json_value: serde_json::Value) {
     println!("{:}", *value);
     let json_value = json!({ "value": *value });
 
-    update_viewmodel_with_json(DotAddress::from("someDataCategory.count"), json_value)
+    update_viewmodel_with_json(DotAddress::from("someItemCategory.count"), json_value)
 }
+...
 
 ```
 
