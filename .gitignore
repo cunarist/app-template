@@ -45,5 +45,6 @@ app.*.map.json
 native/.cargo/config.toml
 native/target/
 android/app/src/*/jniLibs/
+native/android
 xcuserdata
 temp/
