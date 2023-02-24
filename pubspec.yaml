@@ -49,7 +49,7 @@ flutter_icons:
     image_path: "temp/app_icon_windows.png"
     generate: true
     icon_size: 256
-  android: "launcher_icon"
+  android: "ic_launcher"
   image_path_android: "temp/app_icon_android.png"
   macos:
     image_path: "temp/app_icon_macos.png"
