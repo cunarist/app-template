@@ -11,7 +11,7 @@ Extra features added to the default Flutter template are:
 - Rust integration with the ability to use an arbitrary number of library crates
 - MVVM pattern with easy viewmodel binding from Dart and viewmodel update from Rust
 - Convenient configuration management
-- Preserving Rust logic on Dart hot reload
+- Preserving Rust logic on Dart's hot restart
 - Convenient app naming and icon generation
 - Setting desktop window properties
 
