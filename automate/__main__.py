@@ -199,6 +199,38 @@ elif sys.argv[1] == "icon-gen":
     command = "flutter pub run flutter_launcher_icons"
     os.system(command)
 
+elif sys.argv[1] == "translation":
+    filepath = "./assets/translations.csv"
+    with open(filepath, mode="r", encoding="utf8") as file:
+        first_line = file.readline()
+    languages = first_line.split(",")[1:]
+    languages = [t.strip() for t in languages]
+
+    filepath = "./ios/Runner/Info.plist"
+    with open(filepath, mode="r", encoding="utf8") as file:
+        lines = file.read().split("\n")
+    for turn, line in enumerate(lines):
+        if "<key>CFBundleLocalizations</key>" in line:
+            array_start_line = turn + 1
+            break
+
+    for line_number in range(array_start_line, len(lines)):
+        if "</array>" in lines[line_number]:
+            array_end_line = line_number
+
+    lines = lines[:array_start_line] + lines[array_end_line + 1 :]
+
+    language_strings = [" " * 8 + f"<string>{l}</string>" for l in languages]
+    language_strings.insert(0, " " * 4 + "<array>")
+    language_strings.append(" " * 4 + "</array>")
+    print(language_strings)
+    lines = lines[:array_start_line] + language_strings + lines[array_start_line:]
+    final_text = "\n".join(lines)
+
+    filepath = "./ios/Runner/Info.plist"
+    with open(filepath, mode="w", encoding="utf8") as file:
+        file.write(final_text)
+
 else:
     print("No such option for automation is available.")
 

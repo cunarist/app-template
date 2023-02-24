@@ -100,6 +100,12 @@ Apply `app_icon_full.png` file in `./assets` to multiple platforms with [Flutter
 python automate icon-gen
 ```
 
+Apply `translations.csv` file in `./assets` to multiple platforms. On some platforms, only modifying the CSV file is not enough.
+
+```
+python automate translation
+```
+
 Receive the latest commits from [Cunarist App Template](https://github.com/cunarist/app-template).
 
 ```
