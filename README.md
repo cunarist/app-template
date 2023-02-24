@@ -17,7 +17,7 @@ Extra features added to the default Flutter template are:
 
 ## Platform Support
 
-Configuring a Flutter project targeting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to reinvent the wheel.
+Preparing a Flutter project targeting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to reinvent the wheel.
 
 - Windows
 - Linux
@@ -33,9 +33,9 @@ The goal of this template is to enable the full power of Rust while using Flutte
 
 # 🧱 Project Structure
 
-**Flutter** deals with the cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through the viewmodel and function calls.
+**Flutter** deals with the cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through the viewmodel and task calls.
 
-This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive the latest commits from this template repository with the automated Python command stated below.
+This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive the latest commits from this template repository with the automated Python script written below.
 
 # 👜 System Preparation
 
@@ -100,7 +100,7 @@ Apply `app_icon_full.png` file in `./assets` to multiple platforms with [Flutter
 python automate icon-gen
 ```
 
-Apply `translations.csv` file in `./assets` to multiple platforms. On some platforms, only modifying the CSV file is not enough.
+Apply `translations.csv` file in `./assets` to app profiles of multiple platforms. You need to run this extra command after changing the list of supported locales. Only modifying the CSV file is not enough on some platforms.
 
 ```
 python automate translation
@@ -123,7 +123,7 @@ python automate config-filling
 ```
 
 - File `./android/local.properties` contains information about the Android toolchain on the computer.
-- File `./native/.cargo/config.toml` includes environment variables loaded in Rust. You might need them to locate external C++ library paths through environment variables for compilation.
+- File `./native/.cargo/config.toml` includes environment variables loaded in Rust. You might need them to provide external C++ library paths through environment variables for compilation with some third-party crates.
 - There is no environment variable file for Dart. Use Dart's [hot reload](https://docs.flutter.dev/development/tools/hot-reload) feature instead. You might want to change variables directly in Dart to experiment with UI stuff such as dark mode.
 
 Configuration files are not version-controlled. You should change fields inside these files during development to make things work on your computer. That information is only used in production and not included in the final release.
@@ -236,6 +236,8 @@ In Dart, you can use `readViewmodelAsJson` function from `bridge/wrapper.dart` m
 
 You can also use `readViewmodelAsBytes` function which returns `Uint8List` representing raw bytes of a viewmodel item. If the size of a viewmodel item is large, perhaps because it's a large-resolution image, you can pass in a value of true with `takeOwnership` argument to the function to avoid copying. Be aware that this action removes the item from the viewmodel.
 
+Extra mechanisms such as calling a task from Dart can be found in the actual code. If there are things that are still unclear, feel free to leave a question or start a discussion.
+
 Keep in mind that `lib.rs` inside `./native/hub/src` is the entry point of your Rust logic.
 
 # 📜 Rules
@@ -255,7 +257,7 @@ Be careful all the time! You shouldn't be editing any file without enough knowle
 - `native`: Rust crates. The name of the library crate folder should be the same as that of the library crate's name.
   - Think of `hub` crate as your Rust entry point. It is not a binary crate but it is similar.
   - Do not modify `bridge` module inside `hub` crate.
-  - `config.toml.template` file is okay to be modified if needed.
+  - `config.toml.template` file is okay to be modified.
 
 ## Division of Functions
 
@@ -277,7 +279,7 @@ Please write kind and readable comments next to your code. You are probably not 
 
 ## Python Automation Scripts
 
-For faster and easier development, Cunarist App Template relies on Python scripts in `./automate` for automation.
+It is okay to rely on Python scripts in `./automate` for automation for faster and easier development.
 
 # 📁 Folder Structure
 
