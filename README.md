@@ -197,7 +197,7 @@ StreamBuilder<String>(
 ...
 ```
 
-`StreamBuilder` listens to a stream from `viewmodelUpdateBroadcaster` from `bridge/wrapper.dart` module. For better performance, it only listens to events with `dataAddress` of a specific value. In other words, the builder gets notified only when the viewmodel item that they are interested in is changed.
+`StreamBuilder` listens to a stream from `viewmodelUpdateBroadcaster` from `bridge/wrapper.dart` module. For better performance, it only listens to events with `dataAddress` of a specific value. In other words, the builder gets notified only when the viewmodel item that it is interested in is changed.
 
 And then you have a Rust function.
 
