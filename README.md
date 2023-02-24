@@ -4,6 +4,8 @@
 
 This template provides instant capabilities to developers who want to embrace the power of **Rust** and **Flutter** together. Simply duplicate this template and you're ready to go!
 
+![](readme/preview.gif)
+
 Based on the default Flutter template, many popular packages and modifications are applied to make sure everything is super-ready. Future scalability and performance are taken into account.
 
 Extra features added to the default Flutter template are:
