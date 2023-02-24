@@ -253,9 +253,9 @@ Be careful all the time! You shouldn't be editing any file without enough knowle
 ### Rust Related
 
 - `native`: Rust crates. The name of the library crate folder should be the same as that of the library crate's name.
-  - Do not modify `bridge` crate inside.
+  - Think of `hub` crate as your Rust entry point. It is not a binary crate but it is similar.
+  - Do not modify `bridge` module inside `hub` crate.
   - `config.toml.template` file is okay to be modified if needed.
-  - Think of `hub` as your Rust entry point crate. It is not a binary crate but it is similar.
 
 ## Comments
 

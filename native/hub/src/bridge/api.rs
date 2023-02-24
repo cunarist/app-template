@@ -12,10 +12,13 @@ use std::sync::Mutex;
 
 type UserActionSender = OnceCell<Mutex<Sender<(String, String)>>>;
 pub static USER_ACTION_SENDER: UserActionSender = OnceCell::new();
+type UserActionReceiver = OnceCell<Mutex<Receiver<(String, String)>>>;
+pub static USER_ACTION_RECEIVER: UserActionReceiver = OnceCell::new();
 type ViewmodelUpdateSender = OnceCell<Mutex<Sender<(String, Vec<u8>)>>>;
 pub static VIEWMODEL_UPDATE_SENDER: ViewmodelUpdateSender = OnceCell::new();
 type ViewmodelUpdateReceiver = OnceCell<Mutex<Receiver<(String, Vec<u8>)>>>;
 pub static VIEWMODEL_UPDATE_RECEIVER: ViewmodelUpdateReceiver = OnceCell::new();
+
 type ViewModel = OnceCell<Mutex<HashMap<String, Vec<u8>>>>;
 static VIEWMODEL: ViewModel = OnceCell::new();
 
@@ -33,14 +36,13 @@ pub fn start_and_get_viewmodel_update_stream(viewmodel_update_stream: StreamSink
         IS_RUST_LOGIC_STARTED.store(true, Ordering::SeqCst);
         let (sender, receiver) = channel();
         USER_ACTION_SENDER.set(Mutex::new(sender)).ok();
-        hub::USER_ACTION_RECEIVER.set(Mutex::new(receiver)).ok();
+        USER_ACTION_RECEIVER.set(Mutex::new(receiver)).ok();
         let (sender, receiver) = channel();
-        VIEWMODEL_UPDATE_SENDER.set(Mutex::new(sender.clone())).ok();
-        hub::VIEWMODEL_UPDATE_SENDER.set(Mutex::new(sender)).ok();
+        VIEWMODEL_UPDATE_SENDER.set(Mutex::new(sender)).ok();
         VIEWMODEL_UPDATE_RECEIVER.set(Mutex::new(receiver)).ok();
         let viewmodel = HashMap::<String, Vec<u8>>::new();
         VIEWMODEL.set(Mutex::new(viewmodel)).ok();
-        std::thread::spawn(hub::main);
+        std::thread::spawn(crate::main);
     } else {
         // Dart hot restart
         let sender = VIEWMODEL_UPDATE_SENDER.get().unwrap().lock().unwrap();

@@ -139,11 +139,25 @@ elif sys.argv[1] == "config-filling":
 
 elif sys.argv[1] == "bridge-gen":
     command = "flutter_rust_bridge_codegen"
-    command += f" -r ./native/bridge/src/api.rs"
-    command += f" -d ./lib/bridge/bridge_generated.dart"
+    command += f" --rust-input ./native/hub/src/bridge/api.rs"
+    command += f" --dart-output ./lib/bridge/bridge_generated.dart"
+    command += f" --class-name Bridge"
+    command += f" --rust-output ./native/hub/src/bridge/bridge_generated.rs"
     command += f" -c ios/Runner/bridge_generated.h"
     command += f" -e macos/Runner/"
     os.system(command)
+
+    filepath = "./native/hub/src/lib.rs"
+    with open(filepath, mode="r", encoding="utf8") as file:
+        lines = file.readlines()
+
+    for turn, line in enumerate(lines):
+        if "AUTO INJECTED BY flutter_rust_bridge" in line:
+            lines[turn] = ""
+
+    filepath = "./native/hub/src/lib.rs"
+    with open(filepath, mode="w", encoding="utf8") as file:
+        file.write("".join(lines))
 
 elif sys.argv[1] == "template-update":
     command = "git remote rm template"
