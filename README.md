@@ -4,7 +4,7 @@
 
 This template provides instant capabilities to developers who want to embrace the power of **Rust** and **Flutter** together. Simply duplicate this template and you're ready to go!
 
-Based on the default Flutter template, many popular packages and modifications are applied to make sure everything is super-ready. Future scalability and performance are taken into account
+Based on the default Flutter template, many popular packages and modifications are applied to make sure everything is super-ready. Future scalability and performance are taken into account.
 
 Extra features added to the default Flutter template are:
 
@@ -33,7 +33,7 @@ The goal of this template is to enable the full power of Rust while using Flutte
 
 # 🧱 Project Structure
 
-**Flutter** deals with the cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through native steams.
+**Flutter** deals with the cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through viewmodel and function calls.
 
 This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive the latest commits from this template repository with the automated Python command stated below.
 
