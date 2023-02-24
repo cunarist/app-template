@@ -72,7 +72,7 @@ flutter doctor
 
 ## Extra Steps
 
-If you are targeting Android, macOS, iOS, or the web, there are extra steps involved. Refer to [flutter_rust_bridge docs](https://cjycode.com/flutter_rust_bridge/template/setup.html).
+If you are targeting Android, macOS, or iOS, there are extra steps involved. Refer to [flutter_rust_bridge docs](https://cjycode.com/flutter_rust_bridge/template/setup.html) to install necessary components on your system.
 
 # 🗃️ Setting Up
 
