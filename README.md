@@ -246,15 +246,10 @@ Keep in mind that `lib.rs` inside `./native/hub/src` is the entry point of your 
 
 Be careful all the time! You shouldn't be editing any file without enough knowledge of how it works. Below are the top-level files and folders that are allowed to edit during app development:
 
-### Flutter Related
-
 - `lib`: Dart modules.
   - Do not modify the `bridge` folder inside.
 - `pubspec.yaml`: Dart settings and dependencies.
 - `assets`: Asset files.
-
-### Rust Related
-
 - `native`: Rust crates. The name of the library crate folder should be the same as that of the library crate's name.
   - Think of `hub` crate as your Rust entry point. It is not a binary crate but it is similar.
   - Do not modify `bridge` module inside `hub` crate.
