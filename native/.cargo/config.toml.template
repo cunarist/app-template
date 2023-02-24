@@ -1,2 +1,5 @@
+[build]
+target-dir = ".target"
+
 [env]
 SOME_LIBRARY_DIR = "" # Folder path on system
