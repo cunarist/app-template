@@ -43,7 +43,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-    - assets/translations/
 
 flutter_icons:
   windows:
