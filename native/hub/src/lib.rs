@@ -15,7 +15,7 @@ pub async fn main() {
     let user_action_receiver = api::USER_ACTION_RECEIVER.get().unwrap().lock().unwrap();
     loop {
         if let Ok(user_action) = user_action_receiver.recv() {
-            spawn(handle_user_action(user_action));
+            spawn(handle_user_action(user_action.0, user_action.1));
         }
     }
 }

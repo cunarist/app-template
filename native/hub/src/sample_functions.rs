@@ -1,3 +1,4 @@
+use crate::api::DotAddress;
 use crate::api::VIEWMODEL_UPDATE_SENDER;
 use crate::model;
 use serde_json::json;
@@ -13,7 +14,7 @@ pub fn calculate_something(json_value: serde_json::Value) {
     let viewmodel_update_sender = VIEWMODEL_UPDATE_SENDER.get().unwrap().lock().unwrap();
     viewmodel_update_sender
         .send((
-            String::from("someDataCategory.count"),
+            DotAddress::from("someDataCategory.count"),
             json_value.to_string().as_bytes().to_vec(),
         ))
         .ok();
