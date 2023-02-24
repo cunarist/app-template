@@ -33,7 +33,7 @@ The goal of this template is to enable the full power of Rust while using Flutte
 
 # 🧱 Project Structure
 
-**Flutter** deals with the cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through viewmodel and function calls.
+**Flutter** deals with the cross-platform user interface while **Rust** handles the internal logic. The front-end and back-end are completely separated. These two worlds communicate through the viewmodel and function calls.
 
 This repository is based on [Cunarist App Template](https://github.com/cunarist/app-template). It is possible to receive the latest commits from this template repository with the automated Python command stated below.
 
