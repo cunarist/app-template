@@ -43,7 +43,7 @@ app.*.map.json
 
 # Cunarist App Template
 native/.cargo/config.toml
-native/.target/
+native/target/
 android/app/src/*/jniLibs/
 xcuserdata
 temp/
