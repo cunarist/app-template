@@ -26,6 +26,7 @@ dependencies:
   flutter:
     sdk: flutter
   bitsdojo_window: ^0.1.5
+  flutter_rust_bridge: ^1.65.0
   ffi: ^2.0.1
   meta: ^1.8.0
   easy_localization: ^3.0.1
@@ -34,7 +35,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_rust_bridge: ^1.65.0
   flutter_launcher_icons: ^0.11.0
   ffigen: ^7.2.6
   flutter_lints: ^2.0.0
