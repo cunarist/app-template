@@ -17,7 +17,7 @@ Extra features added to the default Flutter template are:
 
 ## Platform Support
 
-Configuring the Flutter project targeting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to reinvent the wheel.
+Configuring a Flutter project targeting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to reinvent the wheel.
 
 - Windows
 - Linux
@@ -257,23 +257,23 @@ Be careful all the time! You shouldn't be editing any file without enough knowle
   - Do not modify `bridge` module inside `hub` crate.
   - `config.toml.template` file is okay to be modified if needed.
 
-## Comments
-
-Please write kind and readable comments next to your code. You are probably not going to be developing on your own. Other developers should be able to get a grasp of the complex code that you wrote. Long and detailed comments are also welcomed.
-
-## User Interface Texts
-
-Always write user interface texts in `./assets/translations`.
-
-When an app gains popularity, there comes a need to support multiple human languages. However, manually replacing thousands of text widgets in the user interface is not a trivial task. Therefore it is a must to write texts that will be presented to normal users in translation files.
-
-Refer to [Easy Localization](https://pub.dev/packages/easy_localization) docs for more details.
-
 ## Division of Functions
 
 Dart should only be used for the front-end user interface and Rust should handle all other back-end logic such as file handling, event handling, timer repetition, calculation, network communication, etc. There can be an exception though if Rust or Dart has trouble dealing with multiple platforms on one's side.
 
 If the characteristic of a specific Rust API is different from other Rust APIs, it should be detached into a separate Rust crate. All crates should provide a clean API with descriptive function names.
+
+## User Interface Texts
+
+Always write user interface texts in `./assets/translations.csv`.
+
+When an app gains popularity, there comes a need to support multiple human languages. However, manually replacing thousands of text widgets in the user interface is not a trivial task. Therefore it is a must to write texts that will be presented to normal users in translation files.
+
+Refer to [Easy Localization](https://pub.dev/packages/easy_localization) docs for more details.
+
+## Comments
+
+Please write kind and readable comments next to your code. You are probably not going to be developing on your own. Other developers should be able to get a grasp of the complex code that you wrote. Long and detailed comments are also welcomed.
 
 ## Python Automation Scripts
 
