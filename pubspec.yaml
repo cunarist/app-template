@@ -1,5 +1,5 @@
 name: someappname
-description: Biased app templated based on combination of Flutter and Rust
+description: Production-ready app templated based on combination of Flutter and Rust
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
