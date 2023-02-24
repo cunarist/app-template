@@ -92,29 +92,24 @@ elif sys.argv[1] == "app-naming":
 elif sys.argv[1] == "config-filling":
     # Scan
     filepath = "./android/local.properties"
-    written_pairs = {}
+    lines = []
     if os.path.isfile(filepath):
         with open(filepath, mode="r", encoding="utf8") as file:
             lines = file.read().splitlines()
-        lines = [x.strip().split("=", 1) for x in lines if "=" in x]
-        written_pairs = dict(lines)
 
-    # Merge
-    filepath = "./android/local.properties.template"
-    with open(filepath, mode="r", encoding="utf8") as file:
-        lines = file.read().splitlines()
-    for turn, line in enumerate(lines):
-        if "=" not in line:
-            continue
-        item_key = line.strip().split("=", 1)[0]
-        item_value = line.strip().split("=", 1)[1]
-        if item_key not in written_pairs.keys():
-            written_pairs[item_key] = item_value
-    text = "\n".join([f"{k}={v}" for k, v in written_pairs.items()])
+    does_exist = False
+    for line in lines:
+        if line.startswith("ndk.dir"):
+            does_exist = True
+            break
+
+    if not does_exist:
+        lines.append("ndk.dir= # Androkd NDK path on your system")
+
     filepath = "./android/local.properties"
     with open(filepath, mode="w", encoding="utf8") as file:
-        file.write(text)
-    print("Updated local.properties file from the template file in ./android folder.")
+        file.write("\n".join(lines))
+    print("Updated local.properties file with necessary fields.")
 
     # Scan
     filepath = "./native/.cargo/config.toml"
@@ -131,8 +126,7 @@ elif sys.argv[1] == "config-filling":
     filepath = "./native/.cargo/config.toml"
     with open(filepath, mode="w", encoding="utf8") as file:
         toml.dump(final_tree, file)
-    text = "Updated config.toml file from the template file"
-    text += " in ./native/.cargo folder."
+    text = "Updated config.toml file with the template file next to it."
     print(text)
 
     print("Now go ahead and fill out the fields in those files!")
