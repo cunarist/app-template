@@ -1,5 +1,5 @@
 use crate::api::DotAddress;
-use crate::api::VIEWMODEL_UPDATE_SENDER;
+use crate::bridge::update_viewmodel_with_json;
 use crate::model;
 use serde_json::json;
 
@@ -11,11 +11,5 @@ pub fn calculate_something(json_value: serde_json::Value) {
     println!("{:}", *value);
     let json_value = json!({ "value": *value });
 
-    let viewmodel_update_sender = VIEWMODEL_UPDATE_SENDER.get().unwrap().lock().unwrap();
-    viewmodel_update_sender
-        .send((
-            DotAddress::from("someDataCategory.count"),
-            json_value.to_string().as_bytes().to_vec(),
-        ))
-        .ok();
+    update_viewmodel_with_json(DotAddress::from("someDataCategory.count"), json_value)
 }

@@ -52,8 +52,8 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StreamBuilder<String>(
-              stream: viewmodelUpdateBroadcaster.stream.where((dataAddress) {
-                return dataAddress == 'someDataCategory.count';
+              stream: viewmodelUpdateBroadcaster.stream.where((itemAddress) {
+                return itemAddress == 'someDataCategory.count';
               }),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {

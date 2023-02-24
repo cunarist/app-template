@@ -177,8 +177,8 @@ import 'bridge/wrapper.dart';
 
 ...
 StreamBuilder<String>(
-  stream: viewmodelUpdateBroadcaster.stream.where((dataAddress) {
-    return dataAddress == 'someDataCategory.count';
+  stream: viewmodelUpdateBroadcaster.stream.where((itemAddress) {
+    return itemAddress == 'someDataCategory.count';
   }),
   builder: (context, snapshot) {
     if (snapshot.hasData) {
@@ -197,7 +197,7 @@ StreamBuilder<String>(
 ...
 ```
 
-`StreamBuilder` listens to a stream from `viewmodelUpdateBroadcaster` from `bridge/wrapper.dart` module. For better performance, it only listens to events with `dataAddress` of a specific value. In other words, the builder gets notified only when the viewmodel item that it is interested in is changed.
+`StreamBuilder` listens to a stream from `viewmodelUpdateBroadcaster` from `bridge/wrapper.dart` module. For better performance, it only listens to events with `itemAddress` of a specific value. In other words, the builder gets notified only when the viewmodel item that it is interested in is changed.
 
 And then you have a Rust function.
 
@@ -205,7 +205,7 @@ And then you have a Rust function.
 // ./native/hub/sample_functions.rs
 
 use crate::api::DotAddress;
-use crate::api::VIEWMODEL_UPDATE_SENDER;
+use crate::bridge::update_viewmodel_with_json;
 use crate::model;
 use serde_json::json;
 
@@ -217,13 +217,7 @@ pub fn calculate_something(json_value: serde_json::Value) {
     println!("{:}", *value);
     let json_value = json!({ "value": *value });
 
-    let viewmodel_update_sender = VIEWMODEL_UPDATE_SENDER.get().unwrap().lock().unwrap();
-    viewmodel_update_sender
-        .send((
-            DotAddress::from("someDataCategory.count"),
-            json_value.to_string().as_bytes().to_vec(),
-        ))
-        .ok();
+    update_viewmodel_with_json(DotAddress::from("someDataCategory.count"), json_value)
 }
 
 ```

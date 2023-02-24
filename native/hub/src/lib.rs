@@ -1,13 +1,12 @@
-mod bridge;
+pub mod bridge;
 mod model;
 mod sample_functions;
 mod user_action_handler;
 
+pub use bridge::api;
 use ctor::dtor;
 use tokio::task::spawn;
 use user_action_handler::handle_user_action;
-
-pub use bridge::api;
 
 #[tokio::main]
 pub async fn main() {
