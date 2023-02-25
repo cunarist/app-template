@@ -21,11 +21,12 @@ Extra features added to the default Flutter template are:
 
 Preparing a Flutter project targeting various platforms is not an easy task. It gets much harder when Rust is involved. With this template, you don't need to reinvent the wheel.
 
-- Windows
-- Linux
-- Android
-- macOS
-- iOS
+- ✅ Windows: Tested and supported
+- ✅ Linux: Tested and supported
+- ✅ Android: Tested and supported
+- ✅ macOS: Tested and supported
+- ✅ iOS: Tested and supported
+- ⏸️ Web: Not supported since threads and shared memory are not available in webassembly yet
 
 ## Contribution
 
